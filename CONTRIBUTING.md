@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to the UC Berkeley Rideshare project! This document provides guidelines and information for contributors.
 
-## How to Contribute
+## 🤝 How to Contribute
 
 ### Types of Contributions
 
@@ -21,7 +21,7 @@ We welcome various types of contributions:
 2. **Read the Documentation**: Familiarize yourself with the project structure and setup
 3. **Join Discussions**: Participate in GitHub Discussions to understand current priorities
 
-## Development Setup
+## 🚀 Development Setup
 
 ### Prerequisites
 
@@ -61,7 +61,7 @@ We welcome various types of contributions:
    make run-frontend
    ```
 
-## Code Style Guidelines
+## 📝 Code Style Guidelines
 
 ### Python (Backend)
 
@@ -116,7 +116,7 @@ const RideCard = ({ ride, onPress }) => {
 - **Add Tests**: Include tests for new functionality
 - **Update Documentation**: Keep README and other docs up to date
 
-## Pull Request Process
+## 🔄 Pull Request Process
 
 ### 1. Create a Feature Branch
 
@@ -169,7 +169,7 @@ Then create a pull request on GitHub with:
 - **Screenshots**: If UI changes are involved
 - **Testing Notes**: How you tested your changes
 
-## Testing Guidelines
+## 🧪 Testing Guidelines
 
 ### Backend Testing
 
@@ -200,7 +200,7 @@ cd apps/rider
 npm test
 ```
 
-## Bug Reports
+## 🐛 Bug Reports
 
 When reporting bugs, please include:
 
@@ -236,7 +236,7 @@ What actually happened
 Any other context, logs, or screenshots
 ```
 
-## Feature Requests
+## 💡 Feature Requests
 
 When requesting features:
 
@@ -245,7 +245,7 @@ When requesting features:
 3. **Mockups**: If applicable, include design mockups
 4. **Priority**: How important this feature is to you
 
-## Documentation Contributions
+## 📚 Documentation Contributions
 
 We welcome contributions to improve documentation:
 
@@ -254,7 +254,7 @@ We welcome contributions to improve documentation:
 - **Code Comments**: Add helpful inline documentation
 - **Tutorials**: Create guides for common tasks
 
-## Issue Labels
+## 🏷️ Issue Labels
 
 We use the following labels to categorize issues:
 
@@ -266,7 +266,7 @@ We use the following labels to categorize issues:
 - `priority: high`: High priority issues
 - `priority: low`: Low priority issues
 
-## Contribution Areas
+## 🎯 Contribution Areas
 
 ### High Priority Areas
 
@@ -282,7 +282,7 @@ We use the following labels to categorize issues:
 - **Test Coverage**: Add tests for existing functionality
 - **Bug Fixes**: Simple bug fixes
 
-## Getting Help
+## 📞 Getting Help
 
 If you need help contributing:
 
@@ -291,7 +291,7 @@ If you need help contributing:
 3. **Join Discussions**: Ask in GitHub Discussions
 4. **Open an Issue**: For specific problems
 
-## Recognition
+## 🎉 Recognition
 
 Contributors will be recognized in:
 
@@ -299,11 +299,11 @@ Contributors will be recognized in:
 - **Release Notes**: Credit for significant contributions
 - **GitHub**: Contributor statistics and profile
 
-## Code of Conduct
+## 📄 Code of Conduct
 
 This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
-## Checklist for Contributors
+## 📋 Checklist for Contributors
 
 Before submitting your contribution, ensure you have:
 
@@ -315,4 +315,4 @@ Before submitting your contribution, ensure you have:
 - [ ] Written clear commit messages
 - [ ] Created a descriptive pull request
 
-Thank you for contributing to the UC Berkeley Rideshare project!
+Thank you for contributing to the UC Berkeley Rideshare project! 🚗✨

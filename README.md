@@ -1,4 +1,4 @@
-# UC Berkeley Rideshare MVP
+# 🚗 UC Berkeley Rideshare MVP
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com)
@@ -9,32 +9,32 @@
 
 A production-ready, full-stack rideshare application built for UC Berkeley's pilot program. Features real-time ride matching, Stripe Connect payments with 0% platform fees, and AI-powered support through LangChain.
 
-## Features
+## ✨ Features
 
-### Core Functionality
+### 🚀 Core Functionality
 - **Magic Link Authentication** - Secure email/phone verification
 - **Real-time Ride Matching** - Socket.IO powered driver-rider communication
 - **Stripe Connect Integration** - Direct payments to drivers (0% platform fee)
 - **Location Services** - GPS tracking and route optimization
 - **Payment Processing** - Secure ride payments and tipping system
 
-### AI Support System
+### 🤖 AI Support System
 - **LangChain RAG Pipeline** - Intelligent support using document embeddings
 - **OpenAI Integration** - GPT-4 powered responses
 - **Document Knowledge Base** - FAQ, policies, and campus playbook
 - **Grounded Responses** - AI answers with source citations
 
-### Mobile Applications
+### 📱 Mobile Applications
 - **Rider App** - Request rides, track drivers, manage payments
 - **Driver App** - Accept rides, update status, manage earnings
 - **Real-time Updates** - Live notifications and status changes
 
-### Web Dashboard
+### 🌐 Web Dashboard
 - **Admin Interface** - Monitor rides, drivers, and system health
 - **Real-time Analytics** - Live data visualization
 - **AI Support Testing** - Interactive support system interface
 
-## Architecture
+## 🏗️ Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -44,27 +44,27 @@ A production-ready, full-stack rideshare application built for UC Berkeley's pil
           │                      │                      │
           └──────────────────────┼──────────────────────┘
                                  │
-                     ┌─────────────▼─────────────┐
-                     │      FastAPI Backend      │
-                     │                           │
-                     │  ┌─────────────────────┐  │
-                     │  │   Socket.IO Server  │  │
-                     │  └─────────────────────┘  │
-                     │  ┌─────────────────────┐  │
-                     │  │   Stripe Connect    │  │
-                     │  └─────────────────────┘  │
-                     │  ┌─────────────────────┐  │
-                     │  │   LangChain RAG     │  │
-                     │  └─────────────────────┘  │
-                     └─────────────┬─────────────┘
-                                   │
-                     ┌─────────────▼─────────────┐
-                     │    PostgreSQL + pgvector  │
-                     │    (User data + AI docs)  │
-                     └───────────────────────────┘
+                    ┌─────────────▼─────────────┐
+                    │      FastAPI Backend      │
+                    │                           │
+                    │  ┌─────────────────────┐  │
+                    │  │   Socket.IO Server  │  │
+                    │  └─────────────────────┘  │
+                    │  ┌─────────────────────┐  │
+                    │  │   Stripe Connect    │  │
+                    │  └─────────────────────┘  │
+                    │  ┌─────────────────────┐  │
+                    │  │   LangChain RAG     │  │
+                    │  └─────────────────────┘  │
+                    └─────────────┬─────────────┘
+                                  │
+                    ┌─────────────▼─────────────┐
+                    │    PostgreSQL + pgvector  │
+                    │    (User data + AI docs)  │
+                    └───────────────────────────┘
 ```
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 - Python 3.11+
@@ -124,7 +124,7 @@ cd apps/rider && npm start
 cd apps/driver && npm start
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 uc-berkeley-rideshare/
@@ -146,7 +146,7 @@ uc-berkeley-rideshare/
 └── README.md              # This file
 ```
 
-## Development Commands
+## 🛠️ Development Commands
 
 ```bash
 make help              # Show all available commands
@@ -161,7 +161,7 @@ make clean             # Clean up Docker resources
 make quick-start       # Complete setup and start backend
 ```
 
-## API Endpoints
+## 🔌 API Endpoints
 
 ### Authentication
 - `POST /auth/magic-link` - Request verification code
@@ -185,7 +185,7 @@ make quick-start       # Complete setup and start backend
 - `POST /ai/support` - Ask AI support questions
 - `GET /ai/health` - AI system health check
 
-## AI Support System
+## 🤖 AI Support System
 
 The application includes an intelligent support system powered by LangChain and OpenAI:
 
@@ -200,7 +200,7 @@ The application includes an intelligent support system powered by LangChain and 
 - "Where are the best pickup spots on campus?"
 - "How does Stripe Connect work for drivers?"
 
-## Payment Flow
+## 💳 Payment Flow
 
 1. **Ride Request**: Rider requests ride with pickup/dropoff
 2. **Driver Assignment**: System matches nearby online drivers
@@ -215,7 +215,7 @@ The application includes an intelligent support system powered by LangChain and 
 - **Automatic Transfers**: Payments transferred immediately
 - **Webhook Handling**: Real-time payment status updates
 
-## Security Features
+## 🔒 Security Features
 
 - **JWT Authentication**: Secure token-based authentication
 - **Magic Link Verification**: Email/phone verification system
@@ -223,7 +223,7 @@ The application includes an intelligent support system powered by LangChain and 
 - **Input Validation**: Pydantic schema validation
 - **CORS Protection**: Configurable cross-origin policies
 
-## Testing
+## 🧪 Testing
 
 ```bash
 # Run backend tests
@@ -234,7 +234,7 @@ cd backend
 python -m pytest tests/ -v
 ```
 
-## Deployment
+## 🚀 Deployment
 
 ### Production Considerations
 - Set `ENVIRONMENT=production` in environment variables
@@ -253,7 +253,7 @@ docker build -t rideshare-backend ./backend
 docker run -p 8000:8000 --env-file .env rideshare-backend
 ```
 
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -261,19 +261,19 @@ docker run -p 8000:8000 --env-file .env rideshare-backend
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
+## 🆘 Support
 
 - **Documentation**: Check the [docs](docs/) folder
 - **Issues**: Report bugs via [GitHub Issues](https://github.com/yourusername/uc-berkeley-rideshare/issues)
 - **Discussions**: Join the conversation in [GitHub Discussions](https://github.com/yourusername/uc-berkeley-rideshare/discussions)
 
-## Roadmap
+## 🗺️ Roadmap
 
-- [ ] **Phase 1**: Core MVP (Complete)
+- [ ] **Phase 1**: Core MVP (✅ Complete)
 - [ ] **Phase 2**: Advanced features (in progress)
   - [ ] Push notifications
   - [ ] Advanced analytics
@@ -283,7 +283,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   - [ ] Database optimization
   - [ ] Performance monitoring
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
 - **UC Berkeley** for pilot program support
 - **Stripe** for payment infrastructure
@@ -293,6 +293,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with love for UC Berkeley's rideshare pilot program**
+**Built with ❤️ for UC Berkeley's rideshare pilot program**
 
 *This is a production-ready MVP that demonstrates modern full-stack development practices with real-time communication, secure payments, and AI-powered support.*
