@@ -13,8 +13,8 @@ Base.metadata.create_all(bind=engine)  # Temporarily disabled for testing
 
 # Create FastAPI app
 app = FastAPI(
-    title="Rideshare API",
-    description="UC Berkeley Rideshare Pilot API",
+    title="Valleyet - Your Trusted Rideshare Partner",
+    description="Valleyet Rideshare API - Safe, Reliable, Valleyet",
     version="1.0.0"
 )
 
@@ -41,6 +41,15 @@ app.add_middleware(
 # Mount Socket.IO app
 # app.mount("/ws", socket_app)
 
+# Serve Valleyet main website
+@app.get("/")
+async def root():
+    """Serve the Valleyet main website"""
+    web_path = Path(__file__).parent / "web" / "index.html"
+    if web_path.exists():
+        return FileResponse(web_path)
+    return {"message": "Valleyet website not found"}
+
 # Serve web dashboard
 @app.get("/dashboard")
 async def get_dashboard():
@@ -59,16 +68,16 @@ async def get_login():
         return FileResponse(login_path)
     return {"message": "Login page not found"}
 
-# Root endpoint
-@app.get("/")
-async def root():
+# API info endpoint
+@app.get("/api")
+async def api_info():
     return {
-        "message": "Rideshare API is running",
+        "message": "Valleyet API is running",
         "endpoints": {
+            "main_website": "/",
             "dashboard": "/dashboard",
             "api_docs": "/docs",
             "login": "/login",
-            # "socket_io": "/ws",
             "health": "/health"
         }
     }
@@ -76,7 +85,7 @@ async def root():
 # Health check
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy"}
+    return {"status": "healthy", "service": "Valleyet"}
 
 # Socket.IO health check
 # @app.get("/socket-health")
