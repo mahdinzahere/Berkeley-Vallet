@@ -5,7 +5,7 @@ load_dotenv()
 
 class Settings:
     # Database
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://user:password@localhost/rideshare")
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://mahdinzahere@localhost:5432/rideshare")
     
     # JWT
     JWT_SECRET: str = os.getenv("JWT_SECRET", "your-secret-key")

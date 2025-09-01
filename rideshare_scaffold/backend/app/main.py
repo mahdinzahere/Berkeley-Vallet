@@ -5,11 +5,11 @@ from fastapi.responses import FileResponse
 from pathlib import Path
 from .database import engine
 from .models import Base
-from .socket_manager import sio
-from .routes import auth, rides, drivers, tips, webhooks, ai
+# from .socket_manager import sio
+# from .routes import auth, rides, drivers, tips, webhooks
 
 # Create database tables
-Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)  # Temporarily disabled for testing
 
 # Create FastAPI app
 app = FastAPI(
@@ -27,19 +27,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(auth.router)
-app.include_router(rides.router)
-app.include_router(drivers.router)
-app.include_router(tips.router)
-app.include_router(webhooks.router)
-app.include_router(ai.router)
+# Include routers - temporarily disabled
+# app.include_router(auth.router)
+# app.include_router(rides.router)
+# app.include_router(drivers.router)
+# app.include_router(tips.router)
+# app.include_router(webhooks.router)
+# app.include_router(ai.router)  # Temporarily disabled - needs OpenAI API key
 
 # Create Socket.IO app
-socket_app = sio.ASGIApp(sio, app)
+# socket_app = sio.ASGIApp(sio, app)
 
 # Mount Socket.IO app
-app.mount("/ws", socket_app)
+# app.mount("/ws", socket_app)
 
 # Serve web dashboard
 @app.get("/dashboard")
@@ -50,6 +50,15 @@ async def get_dashboard():
         return FileResponse(web_path)
     return {"message": "Dashboard not found"}
 
+# Serve login page
+@app.get("/login")
+async def get_login():
+    """Serve the login page"""
+    login_path = Path(__file__).parent / "web" / "login.html"
+    if login_path.exists():
+        return FileResponse(login_path)
+    return {"message": "Login page not found"}
+
 # Root endpoint
 @app.get("/")
 async def root():
@@ -58,7 +67,8 @@ async def root():
         "endpoints": {
             "dashboard": "/dashboard",
             "api_docs": "/docs",
-            "socket_io": "/ws",
+            "login": "/login",
+            # "socket_io": "/ws",
             "health": "/health"
         }
     }
@@ -69,6 +79,7 @@ async def health_check():
     return {"status": "healthy"}
 
 # Socket.IO health check
-@app.get("/socket-health")
-async def socket_health():
-    return {"status": "healthy", "socket_io": "enabled"}
+# @app.get("/socket-health")
+# async def socket_health():
+#     return {"status": "healthy", "socket_io": "enabled"}
+

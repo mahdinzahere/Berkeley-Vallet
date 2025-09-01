@@ -27,7 +27,7 @@ help:
 # Install dependencies
 install:
 	@echo "Installing dependencies..."
-	@cd backend && pip install -r requirements.txt
+	@cd backend && pip3 install -r requirements.txt
 	@cd apps/rider && npm install
 	@cd apps/driver && npm install
 	@echo "✓ Dependencies installed"
