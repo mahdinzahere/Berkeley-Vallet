@@ -50,13 +50,31 @@ async def root():
         return FileResponse(web_path)
     return {"message": "Valleyet website not found"}
 
-# Serve web dashboard
+# Serve rider dashboard
+@app.get("/rider-dashboard")
+async def get_rider_dashboard():
+    """Serve the rider dashboard"""
+    rider_path = Path(__file__).parent / "web" / "rider-dashboard.html"
+    if rider_path.exists():
+        return FileResponse(rider_path)
+    return {"message": "Rider dashboard not found"}
+
+# Serve driver dashboard
+@app.get("/driver-dashboard")
+async def get_driver_dashboard():
+    """Serve the driver dashboard"""
+    driver_path = Path(__file__).parent / "web" / "driver-dashboard.html"
+    if driver_path.exists():
+        return FileResponse(driver_path)
+    return {"message": "Driver dashboard not found"}
+
+# Serve web dashboard (legacy - redirects to rider dashboard)
 @app.get("/dashboard")
 async def get_dashboard():
     """Serve the web dashboard"""
-    web_path = Path(__file__).parent / "web" / "index.html"
-    if web_path.exists():
-        return FileResponse(web_path)
+    rider_path = Path(__file__).parent / "web" / "rider-dashboard.html"
+    if rider_path.exists():
+        return FileResponse(rider_path)
     return {"message": "Dashboard not found"}
 
 # Serve login page
@@ -75,7 +93,8 @@ async def api_info():
         "message": "Valleyet API is running",
         "endpoints": {
             "main_website": "/",
-            "dashboard": "/dashboard",
+            "rider_dashboard": "/rider-dashboard",
+            "driver_dashboard": "/driver-dashboard",
             "api_docs": "/docs",
             "login": "/login",
             "health": "/health"

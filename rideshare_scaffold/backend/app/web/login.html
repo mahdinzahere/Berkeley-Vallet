@@ -3,528 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - UC Berkeley Rideshare</title>
+    <title>Login - Valleyet</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 2rem;
         }
-        
-        .auth-container {
+
+        .login-container {
             background: white;
+            padding: 3rem;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 450px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .auth-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-        }
-        
-        .logo {
+            max-width: 400px;
             text-align: center;
-            margin-bottom: 30px;
         }
-        
-        .logo h1 {
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 5px;
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
         }
-        
-        .logo p {
+
+        .tagline {
             color: #666;
-            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
         }
-        
+
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
+            text-align: left;
         }
-        
+
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
             color: #333;
-            font-weight: 500;
         }
-        
-        .form-group input,
-        .form-group select {
+
+        .form-group input {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e5e9;
+            padding: 1rem;
+            border: 2px solid #ddd;
             border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
+            font-size: 1rem;
+            transition: border-color 0.3s;
         }
-        
-        .form-group input:focus,
-        .form-group select:focus {
+
+        .form-group input:focus {
             outline: none;
             border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-        
-        .role-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .role-option {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid #e1e5e9;
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
             border-radius: 10px;
-            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
         }
-        
-        .role-option:hover {
-            border-color: #667eea;
-            background: #f0f2ff;
+
+        .btn-primary {
+            background: #00d4aa;
+            color: white;
         }
-        
-        .role-option.selected {
-            border-color: #667eea;
+
+        .btn-primary:hover {
+            background: #00b894;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,212,170,0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
             background: #667eea;
             color: white;
         }
-        
-        .role-option .icon {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-            display: block;
-        }
-        
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-        
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .toggle-form {
+
+        .divider {
+            margin: 1.5rem 0;
             text-align: center;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 1rem;
             color: #666;
         }
-        
-        .toggle-form a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        
-        .toggle-form a:hover {
-            text-decoration: underline;
-        }
-        
-        .verification-section {
-            display: none;
-            text-align: center;
-        }
-        
-        .verification-section.show {
-            display: block;
-        }
-        
-        .verification-code {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        
-        .verification-code input {
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-        }
-        
-        .verification-code input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .loading {
+
+        .back-link {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #ffffff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s ease-in-out infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .back-to-dashboard {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .back-to-dashboard a {
+            margin-top: 1rem;
             color: #667eea;
             text-decoration: none;
             font-weight: 500;
         }
-        
-        .back-to-dashboard a:hover {
+
+        .back-link:hover {
             text-decoration: underline;
         }
-        
-        @media (max-width: 480px) {
-            .auth-container {
-                padding: 30px 20px;
-            }
-            
-            .logo h1 {
-                font-size: 1.5rem;
-            }
-            
-            .verification-code input {
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
-            }
+
+        .error-message {
+            color: #e74c3c;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message {
+            color: #27ae60;
+            margin-bottom: 1rem;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="auth-container">
-        <div class="logo">
-            <h1>🚗 UC Berkeley Rideshare</h1>
-            <p>Sign in or create your account</p>
-        </div>
+    <div class="login-container">
+        <div class="logo">Valleyet</div>
+        <p class="tagline">Your trusted rideshare partner</p>
         
-        <!-- Success/Error Messages -->
-        <div id="success-message" class="success-message" style="display: none;"></div>
-        <div id="error-message" class="error-message" style="display: none;"></div>
+        <div class="error-message" id="error-message"></div>
+        <div class="success-message" id="success-message"></div>
         
-        <!-- Login Form -->
-        <form id="login-form">
+        <form id="loginForm">
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required placeholder="your.email@berkeley.edu">
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
             </div>
             
             <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" required placeholder="(510) 555-0123">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
             </div>
             
-            <div class="form-group">
-                <label>I am a:</label>
-                <div class="role-selector">
-                    <div class="role-option" data-role="rider">
-                        <span class="icon">🚶‍♂️</span>
-                        <div>Rider</div>
-                    </div>
-                    <div class="role-option" data-role="driver">
-                        <span class="icon">🚗</span>
-                        <div>Driver</div>
-                    </div>
-                </div>
-            </div>
-            
-            <button type="submit" class="submit-btn" id="login-btn">
-                <span id="login-text">Send Verification Code</span>
-                <span id="login-loading" class="loading" style="display: none;"></span>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Sign In
             </button>
         </form>
         
-        <!-- Verification Form -->
-        <div id="verification-section" class="verification-section">
-            <h3>Enter Verification Code</h3>
-            <p>We've sent a 6-digit code to your email and phone</p>
-            
-            <form id="verification-form">
-                <div class="verification-code">
-                    <input type="text" maxlength="1" class="code-input" data-index="0">
-                    <input type="text" maxlength="1" class="code-input" data-index="1">
-                    <input type="text" maxlength="1" class="code-input" data-index="2">
-                    <input type="text" maxlength="1" class="code-input" data-index="3">
-                    <input type="text" maxlength="1" class="code-input" data-index="4">
-                    <input type="text" maxlength="1" class="code-input" data-index="5">
-                </div>
-                
-                <button type="submit" class="submit-btn" id="verify-btn">
-                    <span id="verify-text">Verify & Sign In</span>
-                    <span id="verify-loading" class="loading" style="display: none;"></span>
-                </button>
-            </form>
-            
-            <div class="toggle-form">
-                <a onclick="resendCode()">Resend Code</a>
-            </div>
+        <div class="divider">
+            <span>or</span>
         </div>
         
-        <div class="back-to-dashboard">
-            <a href="/dashboard">← Back to Dashboard</a>
-        </div>
+        <button class="btn btn-secondary" onclick="continueAsGuest()">
+            <i class="fas fa-user"></i> Continue as Guest
+        </button>
+        
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Valleyet
+        </a>
     </div>
-    
+
     <script>
-        let currentRole = 'rider';
-        let currentEmail = '';
-        let currentPhone = '';
-        
-        // Role selection
-        document.querySelectorAll('.role-option').forEach(option => {
-            option.addEventListener('click', () => {
-                document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
-                currentRole = option.dataset.role;
-            });
-        });
-        
-        // Set default role
-        document.querySelector('[data-role="rider"]').classList.add('selected');
-        
-        // Login form submission
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
             
-            if (!email || !phone) {
-                showError('Please fill in all fields');
-                return;
-            }
-            
-            currentEmail = email;
-            currentPhone = phone;
-            
-            await requestVerificationCode(email, phone, currentRole);
-        });
-        
-        // Verification code input handling
-        document.querySelectorAll('.code-input').forEach((input, index) => {
-            input.addEventListener('input', (e) => {
-                if (e.target.value.length === 1 && index < 5) {
-                    document.querySelector(`[data-index="${index + 1}"]`).focus();
-                }
-            });
-            
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
-                    document.querySelector(`[data-index="${index - 1}"]`).focus();
-                }
-            });
-        });
-        
-        // Verification form submission
-        document.getElementById('verification-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const code = Array.from(document.querySelectorAll('.code-input'))
-                .map(input => input.value)
-                .join('');
-            
-            if (code.length !== 6) {
-                showError('Please enter the complete 6-digit code');
-                return;
-            }
-            
-            await verifyCode(currentEmail, currentPhone, code);
-        });
-        
-        // Request verification code
-        async function requestVerificationCode(email, phone, role) {
-            try {
-                setLoading('login', true);
-                hideMessages();
-                
-                const response = await fetch('/auth/magic-link', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        phone: phone,
-                        role: role
-                    })
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    showSuccess('Verification code sent! Check your email and phone.');
-                    
-                    // Show verification section
-                    document.getElementById('verification-section').classList.add('show');
-                    document.getElementById('login-form').style.display = 'none';
-                    
-                    // Focus first code input
-                    document.querySelector('[data-index="0"]').focus();
-                } else {
-                    const error = await response.json();
-                    showError(error.detail || 'Failed to send verification code');
-                }
-            } catch (error) {
-                showError('Network error. Please try again.');
-            } finally {
-                setLoading('login', false);
-            }
-        }
-        
-        // Verify code
-        async function verifyCode(email, phone, code) {
-            try {
-                setLoading('verify', true);
-                hideMessages();
-                
-                const response = await fetch('/auth/verify', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        phone: phone,
-                        code: code
-                    })
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    
-                    // Store the token
-                    localStorage.setItem('authToken', data.access_token);
-                    localStorage.setItem('userRole', currentRole);
-                    
-                    showSuccess('Successfully signed in! Redirecting...');
-                    
-                    // Redirect to dashboard after a short delay
-                    setTimeout(() => {
-                        window.location.href = '/dashboard';
-                    }, 1500);
-                } else {
-                    const error = await response.json();
-                    showError(error.detail || 'Invalid verification code');
-                }
-            } catch (error) {
-                showError('Network error. Please try again.');
-            } finally {
-                setLoading('verify', false);
-            }
-        }
-        
-        // Resend code
-        async function resendCode() {
-            await requestVerificationCode(currentEmail, currentPhone, currentRole);
-        }
-        
-        // Utility functions
-        function setLoading(type, isLoading) {
-            const btn = document.getElementById(`${type}-btn`);
-            const text = document.getElementById(`${type}-text`);
-            const loading = document.getElementById(`${type}-loading`);
-            
-            if (isLoading) {
-                btn.disabled = true;
-                text.style.display = 'none';
-                loading.style.display = 'inline-block';
-            } else {
-                btn.disabled = false;
-                text.style.display = 'inline';
-                loading.style.display = 'none';
-            }
-        }
-        
-        function showSuccess(message) {
-            const successDiv = document.getElementById('success-message');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-        }
-        
-        function showError(message) {
-            const errorDiv = document.getElementById('error-message');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-        }
-        
-        function hideMessages() {
-            document.getElementById('success-message').style.display = 'none';
+            // Hide any previous messages
             document.getElementById('error-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+            
+            // Basic validation
+            if (!email || !password) {
+                showMessage('Please fill in all fields', 'error');
+                return;
+            }
+            
+            // Simulate login process
+            showMessage('Signing you in...', 'success');
+            
+            // Here you would typically send the login data to your backend
+            console.log('Login attempt:', { email, password });
+            
+            // For demo purposes, redirect to dashboard after a short delay
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 1500);
+        });
+        
+        function continueAsGuest() {
+            showMessage('Continuing as guest...', 'success');
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 1000);
         }
         
-        // Check if user is already logged in
-        window.addEventListener('load', () => {
-            const token = localStorage.getItem('authToken');
-            if (token) {
-                // User is already logged in, redirect to dashboard
-                window.location.href = '/dashboard';
-            }
+        function showMessage(message, type) {
+            const element = document.getElementById(type + '-message');
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+        
+        // Add some interactivity
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
         });
     </script>
 </body>

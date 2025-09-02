@@ -1,265 +1,216 @@
-# 🚗 UC Berkeley Rideshare MVP
+# 🚗 Valleyet - Your Trusted Rideshare Partner
 
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com)
-[![React Native](https://img.shields.io/badge/React%20Native-0.72+-blue.svg)](https://reactnative.dev)
-[![Stripe](https://img.shields.io/badge/Stripe-Connect-orange.svg)](https://stripe.com)
-[![AI](https://img.shields.io/badge/AI-LangChain-purple.svg)](https://langchain.com)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-A production-ready, full-stack rideshare application built for UC Berkeley's pilot program. Features real-time ride matching, Stripe Connect payments with 0% platform fees, and AI-powered support through LangChain.
+**Valleyet** is a complete, functional Uber clone built with modern web technologies, featuring real-time ride booking, AI-powered pricing, Google Maps integration, and separate dashboards for riders and drivers.
 
 ## ✨ Features
 
-### 🚀 Core Functionality
-- **Magic Link Authentication** - Secure email/phone verification
-- **Real-time Ride Matching** - Socket.IO powered driver-rider communication
-- **Stripe Connect Integration** - Direct payments to drivers (0% platform fee)
-- **Location Services** - GPS tracking and route optimization
-- **Payment Processing** - Secure ride payments and tipping system
+### 🎯 **Main Website (Uber-like Landing Page)**
+- **Search Bar with Google Maps Integration**: Enter pickup and destination locations with autocomplete
+- **Current Location Detection**: Automatically detects user's location for pickup
+- **Real-time Pricing**: See prices only after entering both locations (AI-powered pricing algorithm)
+- **Responsive Design**: Beautiful, modern interface that works on all devices
+- **Login/Signup System**: Seamless authentication flow with role-based routing
 
-### 🤖 AI Support System
-- **LangChain RAG Pipeline** - Intelligent support using document embeddings
-- **OpenAI Integration** - GPT-4 powered responses
-- **Document Knowledge Base** - FAQ, policies, and campus playbook
-- **Grounded Responses** - AI answers with source citations
+### 🚖 **Rider Dashboard**
+- **Interactive Google Maps**: Real-time location tracking and route visualization
+- **Smart Pricing System**: AI-powered pricing that calculates fares based on distance and time
+- **Pickup Time Selection**: Choose between immediate pickup or scheduled rides
+- **Ride Type Selection**: Economy, Comfort, and Premium options with real-time pricing
+- **Past Rides History**: Complete ride history with ratings, drivers, and trip details
+- **Real-time Driver Tracking**: Live updates on driver location and ETA
+- **Location Autocomplete**: Google Places API integration for accurate addresses
 
-### 📱 Mobile Applications
-- **Rider App** - Request rides, track drivers, manage payments
-- **Driver App** - Accept rides, update status, manage earnings
-- **Real-time Updates** - Live notifications and status changes
+### 🚘 **Driver Dashboard**
+- **Real-time Ride Requests**: Live incoming ride requests with passenger details
+- **Interactive Map Interface**: Google Maps with pickup/destination markers
+- **Online/Offline Toggle**: Control when to receive ride requests
+- **Ride Management**: Accept, decline, start, and complete rides
+- **Earnings Tracking**: Real-time stats and earnings calculation
+- **Ride History**: Complete history of completed rides with earnings
+- **Location Updates**: Continuous GPS tracking for accurate driver positioning
 
-### 🌐 Web Dashboard
-- **Admin Interface** - Monitor rides, drivers, and system health
-- **Real-time Analytics** - Live data visualization
-- **AI Support Testing** - Interactive support system interface
+### 🗺️ **Google Maps Integration**
+- **Full Maps API**: Interactive maps with custom markers and styling
+- **Location Services**: GPS integration for real-time positioning
+- **Address Autocomplete**: Google Places API for accurate location input
+- **Route Visualization**: Visual representation of pickup and destination points
+- **Real-time Updates**: Live location tracking for both riders and drivers
 
-## 🏗️ Architecture
-
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Rider App     │    │  Driver App     │    │  Web Dashboard  │
-│  (React Native) │    │ (React Native)  │    │   (HTML/JS)     │
-└─────────┬───────┘    └─────────┬───────┘    └─────────┬───────┘
-          │                      │                      │
-          └──────────────────────┼──────────────────────┘
-                                 │
-                    ┌─────────────▼─────────────┐
-                    │      FastAPI Backend      │
-                    │                           │
-                    │  ┌─────────────────────┐  │
-                    │  │   Socket.IO Server  │  │
-                    │  └─────────────────────┘  │
-                    │  ┌─────────────────────┐  │
-                    │  │   Stripe Connect    │  │
-                    │  └─────────────────────┘  │
-                    │  ┌─────────────────────┐  │
-                    │  │   LangChain RAG     │  │
-                    │  └─────────────────────┘  │
-                    └─────────────┬─────────────┘
-                                  │
-                    ┌─────────────▼─────────────┐
-                    │    PostgreSQL + pgvector  │
-                    │    (User data + AI docs)  │
-                    └───────────────────────────┘
-```
+### 🤖 **AI-Powered Features**
+- **Dynamic Pricing**: Intelligent fare calculation based on distance, time, and demand
+- **Route Optimization**: Smart routing algorithms for efficient trips
+- **Demand Prediction**: AI-based pricing adjustments for peak hours
+- **Real-time Analytics**: Live data processing for optimal ride matching
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.11+
-- Node.js 18+
-- Docker & Docker Compose
-- Stripe Account
-- OpenAI API Key
+- Python 3.8+
+- PostgreSQL database
+- Google Maps API key
 
-### 1. Clone the Repository
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd rideshare_scaffold
+   ```
+
+2. **Set up virtual environment**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. **Install dependencies**
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   ```
+
+4. **Configure environment variables**
+   ```bash
+   cp env.example .env
+   # Edit .env with your database and API credentials
+   ```
+
+5. **Set up Google Maps API**
+   - Get API key from [Google Cloud Console](https://console.cloud.google.com/)
+   - Replace `YOUR_GOOGLE_MAPS_API_KEY` in:
+     - `backend/app/web/index.html`
+     - `backend/app/web/rider-dashboard.html`
+     - `backend/app/web/driver-dashboard.html`
+
+6. **Start the server**
+   ```bash
+   python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+   ```
+
+7. **Access Valleyet**
+   - **Main Website**: http://localhost:8000/
+   - **Rider Dashboard**: http://localhost:8000/rider-dashboard
+   - **Driver Dashboard**: http://localhost:8000/driver-dashboard
+   - **API Documentation**: http://localhost:8000/docs
+
+## 🎮 How to Use
+
+### For Riders
+1. **Visit the main page** and enter pickup/destination locations
+2. **Click "See Prices"** to view ride options and pricing
+3. **Select ride type** (Economy, Comfort, or Premium)
+4. **Book your ride** and track your driver in real-time
+5. **View ride history** in the Past Rides tab
+
+### For Drivers
+1. **Go online** using the toggle button
+2. **Receive ride requests** in real-time
+3. **Accept rides** and view passenger details
+4. **Navigate to pickup** using integrated maps
+5. **Complete rides** and track earnings
+
+## 🏗️ Architecture
+
+### Frontend
+- **HTML5/CSS3**: Modern, responsive design
+- **JavaScript ES6+**: Interactive functionality and real-time updates
+- **Google Maps API**: Location services and mapping
+- **Font Awesome**: Professional icons and UI elements
+
+### Backend
+- **FastAPI**: High-performance Python web framework
+- **PostgreSQL**: Robust database with pgvector extension
+- **SQLAlchemy**: Database ORM and migrations
+- **Uvicorn**: ASGI server for production deployment
+
+### Key Components
+- **Real-time Location Tracking**: GPS integration with continuous updates
+- **AI Pricing Engine**: Dynamic fare calculation algorithms
+- **Ride Matching System**: Intelligent driver-rider pairing
+- **Payment Integration**: Ready for Stripe integration
+- **WebSocket Support**: Real-time communication infrastructure
+
+## 🔧 Configuration
+
+### Environment Variables
 ```bash
-git clone https://github.com/yourusername/uc-berkeley-rideshare.git
-cd uc-berkeley-rideshare
+DATABASE_URL=postgresql://user:password@localhost:5432/rideshare
+GOOGLE_MAPS_API_KEY=your_api_key_here
+SECRET_KEY=your_secret_key_here
 ```
 
-### 2. Environment Setup
-```bash
-# Copy environment template
-cp .env.example .env
+### Google Maps API Setup
+1. Enable Google Maps JavaScript API
+2. Enable Google Places API
+3. Enable Geocoding API
+4. Set up billing and quotas
+5. Restrict API key to your domain
 
-# Edit .env with your API keys
-nano .env
-```
+## 📱 Mobile Responsiveness
 
-Required environment variables:
-```env
-DATABASE_URL=postgresql://user:password@localhost/rideshare
-JWT_SECRET=your-secret-key
-STRIPE_SECRET_KEY=sk_test_...
-STRIPE_PUBLISHABLE_KEY=pk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-OPENAI_API_KEY=sk-...
-```
-
-### 3. Complete Setup
-```bash
-# Install dependencies and setup database
-make dev-setup
-
-# Setup AI support system
-make embed-docs
-
-# Start the backend
-make run-backend
-```
-
-### 4. Access the Application
-- **Web Dashboard**: http://localhost:8000/dashboard
-- **API Documentation**: http://localhost:8000/docs
-- **Health Check**: http://localhost:8000/health
-
-### 5. Start Mobile Apps
-```bash
-# Terminal 1 - Rider App
-cd apps/rider && npm start
-
-# Terminal 2 - Driver App  
-cd apps/driver && npm start
-```
-
-## 📁 Project Structure
-
-```
-uc-berkeley-rideshare/
-├── backend/                 # FastAPI backend
-│   ├── app/
-│   │   ├── ai/            # LangChain RAG implementation
-│   │   ├── routes/        # API endpoints
-│   │   ├── models.py      # Database models
-│   │   ├── schemas.py     # Pydantic schemas
-│   │   └── main.py        # FastAPI application
-│   ├── docs/              # AI knowledge base
-│   ├── requirements.txt   # Python dependencies
-│   └── Dockerfile         # Backend containerization
-├── apps/
-│   ├── rider/             # Rider mobile app
-│   └── driver/            # Driver mobile app
-├── docker-compose.yml      # Development environment
-├── Makefile               # Development commands
-└── README.md              # This file
-```
-
-## 🛠️ Development Commands
-
-```bash
-make help              # Show all available commands
-make install           # Install all dependencies
-make setup-db          # Setup database with pgvector
-make run-backend       # Start backend services
-make run-frontend      # Start mobile apps
-make web-dashboard     # Open web dashboard
-make embed-docs        # Setup AI support system
-make test              # Run backend tests
-make clean             # Clean up Docker resources
-make quick-start       # Complete setup and start backend
-```
-
-## 🔌 API Endpoints
-
-### Authentication
-- `POST /auth/magic-link` - Request verification code
-- `POST /auth/verify` - Verify code and get JWT
-- `GET /auth/me` - Get current user profile
-
-### Rides
-- `POST /rides/quote` - Get ride fare estimate
-- `POST /rides/request` - Request a ride
-- `POST /rides/{id}/accept` - Driver accepts ride
-- `PUT /rides/{id}/status` - Update ride status
-- `GET /rides` - Get user's ride history
-
-### Drivers
-- `POST /drivers/profile` - Create driver profile
-- `POST /drivers/online` - Go online
-- `POST /drivers/offline` - Go offline
-- `PUT /drivers/location` - Update location
-
-### AI Support
-- `POST /ai/support` - Ask AI support questions
-- `GET /ai/health` - AI system health check
-
-## 🤖 AI Support System
-
-The application includes an intelligent support system powered by LangChain and OpenAI:
-
-- **Document Embeddings**: Markdown files are processed and stored in pgvector
-- **Retrieval-Augmented Generation**: AI responses are grounded in documentation
-- **Knowledge Base**: FAQ, policies, and campus-specific guidance
-- **Source Citations**: Responses include reference to source documents
-
-### Example Queries
-- "How do I cancel a ride?"
-- "What's the refund policy?"
-- "Where are the best pickup spots on campus?"
-- "How does Stripe Connect work for drivers?"
-
-## 💳 Payment Flow
-
-1. **Ride Request**: Rider requests ride with pickup/dropoff
-2. **Driver Assignment**: System matches nearby online drivers
-3. **Payment Authorization**: Stripe PaymentIntent created (not captured)
-4. **Ride Completion**: Driver marks ride complete
-5. **Payment Capture**: Payment captured and transferred to driver
-6. **Tipping**: Optional tip as separate PaymentIntent
-
-### Stripe Connect Features
-- **0% Platform Fee**: All payments go directly to drivers
-- **Express Onboarding**: Quick driver account setup
-- **Automatic Transfers**: Payments transferred immediately
-- **Webhook Handling**: Real-time payment status updates
-
-## 🔒 Security Features
-
-- **JWT Authentication**: Secure token-based authentication
-- **Magic Link Verification**: Email/phone verification system
-- **Stripe Webhooks**: Secure payment event handling
-- **Input Validation**: Pydantic schema validation
-- **CORS Protection**: Configurable cross-origin policies
-
-## 🧪 Testing
-
-```bash
-# Run backend tests
-make test
-
-# Test specific components
-cd backend
-python -m pytest tests/ -v
-```
+Valleyet is fully responsive and works seamlessly on:
+- **Desktop computers**
+- **Tablets**
+- **Mobile phones**
+- **All modern browsers**
 
 ## 🚀 Deployment
 
-### Production Considerations
-- Set `ENVIRONMENT=production` in environment variables
-- Configure proper CORS origins
-- Use production Stripe keys
-- Set up monitoring and logging
-- Configure SSL/TLS certificates
-- Set up database backups
+### Production Deployment
+1. **Set up PostgreSQL database**
+2. **Configure environment variables**
+3. **Set up Google Maps API with domain restrictions**
+4. **Deploy using Docker or direct server deployment**
+5. **Set up SSL certificates**
+6. **Configure reverse proxy (nginx/Apache)**
 
 ### Docker Deployment
 ```bash
-# Build production images
-docker build -t rideshare-backend ./backend
+docker-compose up -d
+```
 
-# Run with production environment
-docker run -p 8000:8000 --env-file .env rideshare-backend
+## 🔒 Security Features
+
+- **CORS protection** with configurable origins
+- **Input validation** and sanitization
+- **SQL injection protection** via SQLAlchemy
+- **XSS protection** with proper content encoding
+- **Rate limiting** capabilities
+- **Secure authentication** system
+
+## 📊 Performance Features
+
+- **Async/await** support for high concurrency
+- **Database connection pooling**
+- **Static file serving** optimization
+- **Caching strategies** for frequently accessed data
+- **Real-time updates** via WebSocket connections
+
+## 🧪 Testing
+
+### Manual Testing
+1. **Test rider flow**: Book rides, track drivers, view history
+2. **Test driver flow**: Go online, accept rides, complete trips
+3. **Test maps integration**: Location detection, routing, markers
+4. **Test responsive design**: Various screen sizes and devices
+
+### Automated Testing
+```bash
+# Run backend tests
+cd backend
+python -m pytest
+
+# Run frontend tests (if implemented)
+npm test
 ```
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new functionality
+5. Submit a pull request
 
 ## 📄 License
 
@@ -267,32 +218,28 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-- **Documentation**: Check the [docs](docs/) folder
-- **Issues**: Report bugs via [GitHub Issues](https://github.com/yourusername/uc-berkeley-rideshare/issues)
-- **Discussions**: Join the conversation in [GitHub Discussions](https://github.com/yourusername/uc-berkeley-rideshare/discussions)
+For support and questions:
+- **Issues**: Create an issue in the GitHub repository
+- **Documentation**: Check the API docs at `/docs`
+- **Community**: Join our developer community
 
-## 🗺️ Roadmap
+## 🎯 Roadmap
 
-- [ ] **Phase 1**: Core MVP (✅ Complete)
-- [ ] **Phase 2**: Advanced features (in progress)
-  - [ ] Push notifications
-  - [ ] Advanced analytics
-  - [ ] Driver rating system
-- [ ] **Phase 3**: Scale and optimize
-  - [ ] Load balancing
-  - [ ] Database optimization
-  - [ ] Performance monitoring
+### Upcoming Features
+- **Payment Integration**: Stripe payment processing
+- **Push Notifications**: Real-time alerts for riders and drivers
+- **Advanced Analytics**: Driver performance metrics and insights
+- **Multi-language Support**: Internationalization features
+- **Mobile Apps**: Native iOS and Android applications
 
-## 🙏 Acknowledgments
-
-- **UC Berkeley** for pilot program support
-- **Stripe** for payment infrastructure
-- **OpenAI** for AI capabilities
-- **FastAPI** for modern Python web framework
-- **React Native** for cross-platform mobile development
+### Future Enhancements
+- **Machine Learning**: Advanced pricing and demand prediction
+- **Blockchain Integration**: Decentralized ride sharing
+- **IoT Integration**: Smart city connectivity
+- **AR Navigation**: Augmented reality directions
 
 ---
 
-**Built with ❤️ for UC Berkeley's rideshare pilot program**
+**Valleyet** - Safe, Reliable, Valleyet. 🚗✨
 
-*This is a production-ready MVP that demonstrates modern full-stack development practices with real-time communication, secure payments, and AI-powered support.*
+*Built with ❤️ for the modern rideshare experience*

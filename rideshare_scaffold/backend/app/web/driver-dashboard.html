@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Dashboard - Valleyet</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBP4bhX8cTcgF3f3Vj_NdRN-nx1_V9rQE&libraries=places"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: #000;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .driver-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status-offline {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status-online {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-busy {
+            background: #ffc107;
+            color: black;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #00d4aa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .logout-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+
+        /* Map Section */
+        .map-section {
+            flex: 2;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Driver Panel */
+        .driver-panel {
+            flex: 1;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            max-width: 450px;
+        }
+
+        .driver-header {
+            background: #000;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .driver-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .driver-header p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Online/Offline Toggle */
+        .toggle-section {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .toggle-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .toggle-btn.online {
+            background: #28a745;
+            color: white;
+        }
+
+        .toggle-btn.offline {
+            background: #dc3545;
+            color: white;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Driver Stats */
+        .driver-stats {
+            padding: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00d4aa;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Ride Requests */
+        .ride-requests {
+            padding: 2rem;
+            display: none;
+        }
+
+        .ride-request {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #00d4aa;
+            transition: all 0.3s;
+        }
+
+        .ride-request:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .request-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00d4aa;
+        }
+
+        .request-distance {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .request-locations {
+            margin-bottom: 1rem;
+        }
+
+        .location-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .location-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+        }
+
+        .pickup-icon {
+            background: #00d4aa;
+        }
+
+        .destination-icon {
+            background: #667eea;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .action-btn.accept {
+            background: #28a745;
+            color: white;
+        }
+
+        .action-btn.decline {
+            background: #dc3545;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Active Ride */
+        .active-ride {
+            padding: 2rem;
+            display: none;
+        }
+
+        .ride-info {
+            background: #e8f8f3;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .ride-status {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00d4aa;
+            margin-bottom: 1rem;
+        }
+
+        .passenger-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .passenger-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 1rem;
+        }
+
+        .passenger-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .passenger-rating {
+            color: #ffc107;
+            margin-bottom: 1rem;
+        }
+
+        .ride-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-tab.active {
+            background: white;
+            border-bottom-color: #00d4aa;
+            color: #00d4aa;
+            font-weight: 600;
+        }
+
+        .nav-tab:hover {
+            background: #f0f0f0;
+        }
+
+        /* Ride History */
+        .ride-history {
+            padding: 2rem;
+            display: none;
+        }
+
+        .history-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #00d4aa;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .history-date {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .history-earnings {
+            color: #00d4aa;
+            font-weight: bold;
+        }
+
+        .history-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+
+            .driver-panel {
+                max-width: none;
+                order: -1;
+            }
+
+            .map-section {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="logo">Valleyet</a>
+            <div class="driver-status">
+                <div class="status-indicator status-offline" id="statusIndicator">
+                    <i class="fas fa-circle"></i>
+                    <span id="statusText">Offline</span>
+                </div>
+            </div>
+            <div class="user-menu">
+                <div class="user-avatar">MJ</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Map Section -->
+        <div class="map-section">
+            <div id="map"></div>
+        </div>
+
+        <!-- Driver Panel -->
+        <div class="driver-panel">
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="switchTab('dashboard')">Dashboard</div>
+                <div class="nav-tab" onclick="switchTab('history')">History</div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboardTab" class="tab-content">
+                <!-- Driver Header -->
+                <div class="driver-header">
+                    <h1>Driver Dashboard</h1>
+                    <p>Manage your rides and earnings</p>
+                </div>
+
+                <!-- Online/Offline Toggle -->
+                <div class="toggle-section">
+                    <button class="toggle-btn online" id="toggleBtn" onclick="toggleStatus()">
+                        <i class="fas fa-play"></i> Go Online
+                    </button>
+                    <p>Go online to start receiving ride requests</p>
+                </div>
+
+                <!-- Driver Stats -->
+                <div class="driver-stats">
+                    <h3>Today's Stats</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="ridesCompleted">0</div>
+                            <div class="stat-label">Rides</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="earnings">$0</div>
+                            <div class="stat-label">Earnings</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="hoursOnline">0</div>
+                            <div class="stat-label">Hours</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="rating">4.9</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ride Requests -->
+                <div class="ride-requests" id="rideRequests">
+                    <h3>Available Rides</h3>
+                    <div id="rideRequestsList">
+                        <!-- Ride requests will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Active Ride -->
+                <div class="active-ride" id="activeRide">
+                    <div class="ride-info">
+                        <div class="ride-status">
+                            <i class="fas fa-car"></i> Pick up passenger
+                        </div>
+                        <div id="activeRideDetails">
+                            <!-- Active ride details will be populated here -->
+                        </div>
+                    </div>
+
+                    <div class="passenger-info" id="passengerInfo">
+                        <!-- Passenger info will be populated here -->
+                    </div>
+
+                    <div class="ride-actions">
+                        <button class="action-btn accept" onclick="startRide()">
+                            <i class="fas fa-play"></i> Start Ride
+                        </button>
+                        <button class="action-btn decline" onclick="cancelRide()">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Tab -->
+            <div id="historyTab" class="tab-content" style="display: none;">
+                <div class="ride-history">
+                    <h3>Your Ride History</h3>
+                    <div id="historyList">
+                        <!-- Ride history will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let map;
+        let isOnline = false;
+        let currentRide = null;
+        let rideRequests = [];
+        let rideHistory = [];
+        let driverLocation = null;
+        let driverMarker = null;
+
+        // Initialize Google Maps
+        function initMap() {
+            const defaultLocation = { lat: 37.7749, lng: -122.4194 }; // San Francisco
+            
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: defaultLocation,
+                zoom: 15,
+                styles: [
+                    {
+                        featureType: 'poi',
+                        elementType: 'labels',
+                        stylers: [{ visibility: 'off' }]
+                    }
+                ]
+            });
+
+            // Get driver's current location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        driverLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+                        
+                        // Add driver marker
+                        driverMarker = new google.maps.Marker({
+                            position: driverLocation,
+                            map: map,
+                            title: 'Your Location',
+                            icon: {
+                                url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="8" fill="#00d4aa"/>
+                                        <circle cx="12" cy="12" r="3" fill="white"/>
+                                    </svg>
+                                `),
+                                scaledSize: new google.maps.Size(24, 24)
+                            }
+                        });
+                        
+                        map.setCenter(driverLocation);
+                        
+                        // Start location updates
+                        startLocationUpdates();
+                    },
+                    () => {
+                        console.log('Error: The Geolocation service failed.');
+                    }
+                );
+            }
+        }
+
+        // Start location updates
+        function startLocationUpdates() {
+            setInterval(() => {
+                if (navigator.geolocation && isOnline) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const newLocation = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                            };
+                            
+                            if (driverMarker) {
+                                driverMarker.setPosition(newLocation);
+                            }
+                            
+                            driverLocation = newLocation;
+                            
+                            // Update map center if no active ride
+                            if (!currentRide) {
+                                map.setCenter(newLocation);
+                            }
+                        },
+                        () => {
+                            console.log('Location update failed');
+                        }
+                    );
+                }
+            }, 10000); // Update every 10 seconds
+        }
+
+        // Toggle online/offline status
+        function toggleStatus() {
+            isOnline = !isOnline;
+            const toggleBtn = document.getElementById('toggleBtn');
+            const statusIndicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+            const rideRequestsSection = document.getElementById('rideRequests');
+
+            if (isOnline) {
+                toggleBtn.innerHTML = '<i class="fas fa-stop"></i> Go Offline';
+                toggleBtn.className = 'toggle-btn offline';
+                statusIndicator.className = 'status-indicator status-online';
+                statusText.textContent = 'Online';
+                rideRequestsSection.style.display = 'block';
+                
+                // Start receiving ride requests
+                startReceivingRequests();
+            } else {
+                toggleBtn.innerHTML = '<i class="fas fa-play"></i> Go Online';
+                toggleBtn.className = 'toggle-btn online';
+                statusIndicator.className = 'status-indicator status-offline';
+                statusText.textContent = 'Offline';
+                rideRequestsSection.style.display = 'none';
+                
+                // Stop receiving ride requests
+                stopReceivingRequests();
+            }
+        }
+
+        // Start receiving ride requests
+        function startReceivingRequests() {
+            // In a real app, this would connect to a WebSocket or polling service
+            // For demo purposes, we'll simulate real ride requests
+            const requestInterval = setInterval(() => {
+                if (!isOnline) {
+                    clearInterval(requestInterval);
+                    return;
+                }
+                
+                // Generate realistic ride request
+                const request = generateRealRideRequest();
+                addRideRequest(request);
+            }, Math.random() * 30000 + 15000); // Random interval between 15-45 seconds
+        }
+
+        // Stop receiving ride requests
+        function stopReceivingRequests() {
+            // Clear existing requests
+            document.getElementById('rideRequestsList').innerHTML = '';
+        }
+
+        // Generate realistic ride request
+        function generateRealRideRequest() {
+            const locations = [
+                '123 Main St, Downtown, San Francisco, CA',
+                '456 Oak Ave, Uptown, San Francisco, CA',
+                '789 Pine St, Midtown, San Francisco, CA',
+                '321 Elm St, Westside, San Francisco, CA',
+                '654 Maple Dr, Eastside, San Francisco, CA',
+                '987 Cedar Ln, Northside, San Francisco, CA',
+                '147 Birch Rd, Southside, San Francisco, CA'
+            ];
+            
+            const pickup = locations[Math.floor(Math.random() * locations.length)];
+            let destination;
+            do {
+                destination = locations[Math.floor(Math.random() * locations.length)];
+            } while (destination === pickup);
+            
+            // Calculate realistic pricing based on distance
+            const basePrice = 12.50;
+            const distanceMultiplier = Math.random() * 0.8 + 0.6; // 0.6 to 1.4
+            const price = (basePrice * distanceMultiplier).toFixed(2);
+            
+            // Calculate realistic distance
+            const distance = (Math.random() * 8 + 1).toFixed(1); // 1.0 to 9.0 miles
+            
+            return {
+                id: Date.now() + Math.random(),
+                pickup: pickup,
+                destination: destination,
+                price: parseFloat(price),
+                distance: parseFloat(distance),
+                passenger: {
+                    name: generateRandomName(),
+                    rating: (Math.random() * 1 + 4).toFixed(1), // 4.0 to 5.0
+                    phone: generateRandomPhone()
+                },
+                timestamp: new Date()
+            };
+        }
+
+        // Generate random passenger name
+        function generateRandomName() {
+            const firstNames = ['Sarah', 'Michael', 'David', 'Jennifer', 'James', 'Lisa', 'Robert', 'Amanda', 'John', 'Jessica'];
+            const lastNames = ['Johnson', 'Smith', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
+            
+            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            
+            return `${firstName} ${lastName}`;
+        }
+
+        // Generate random phone number
+        function generateRandomPhone() {
+            const areaCode = Math.floor(Math.random() * 900) + 100;
+            const prefix = Math.floor(Math.random() * 900) + 100;
+            const lineNumber = Math.floor(Math.random() * 9000) + 1000;
+            
+            return `(${areaCode}) ${prefix}-${lineNumber}`;
+        }
+
+        // Add ride request to the panel
+        function addRideRequest(request) {
+            const rideRequestsList = document.getElementById('rideRequestsList');
+            const requestElement = document.createElement('div');
+            requestElement.className = 'ride-request';
+            requestElement.id = `request-${request.id}`;
+            
+            requestElement.innerHTML = `
+                <div class="request-header">
+                    <div class="request-price">$${request.price.toFixed(2)}</div>
+                    <div class="request-distance">${request.distance} miles</div>
+                </div>
+                <div class="request-locations">
+                    <div class="location-item">
+                        <div class="location-icon pickup-icon">P</div>
+                        <div>${request.pickup}</div>
+                    </div>
+                    <div class="location-item">
+                        <div class="location-icon destination-icon">D</div>
+                        <div>${request.destination}</div>
+                    </div>
+                </div>
+                <div class="request-actions">
+                    <button class="action-btn accept" onclick="acceptRide('${request.id}')">
+                        <i class="fas fa-check"></i> Accept
+                    </button>
+                    <button class="action-btn decline" onclick="declineRide('${request.id}')">
+                        <i class="fas fa-times"></i> Decline
+                    </button>
+                </div>
+            `;
+            
+            rideRequestsList.appendChild(requestElement);
+            
+            // Auto-remove request after 60 seconds if not accepted
+            setTimeout(() => {
+                if (document.getElementById(`request-${request.id}`)) {
+                    document.getElementById(`request-${request.id}`).remove();
+                }
+            }, 60000);
+        }
+
+        // Accept ride
+        function acceptRide(requestId) {
+            // Find the request
+            const requestElement = document.getElementById(`request-${requestId}`);
+            if (!requestElement) return;
+            
+            // Get request data
+            const request = rideRequests.find(r => r.id == requestId) || {
+                id: requestId,
+                pickup: '123 Main St, Downtown',
+                destination: '456 Oak Ave, Uptown',
+                price: 18.75,
+                passenger: {
+                    name: 'Sarah Johnson',
+                    rating: 4.8,
+                    phone: '(555) 123-4567'
+                }
+            };
+            
+            // Remove the request
+            requestElement.remove();
+            
+            // Show active ride section
+            document.getElementById('rideRequests').style.display = 'none';
+            document.getElementById('activeRide').style.display = 'block';
+            
+            // Update status to busy
+            document.getElementById('statusIndicator').className = 'status-indicator status-busy';
+            document.getElementById('statusIndicator').innerHTML = '<i class="fas fa-circle"></i><span id="statusText">Busy</span>';
+            document.getElementById('statusText').textContent = 'Busy';
+            
+            // Update active ride details
+            document.getElementById('activeRideDetails').innerHTML = `
+                <div>Pickup: ${request.pickup}</div>
+                <div>Destination: ${request.destination}</div>
+            `;
+            
+            // Update passenger info
+            document.getElementById('passengerInfo').innerHTML = `
+                <div class="passenger-avatar">${request.passenger.name.split(' ').map(n => n[0]).join('')}</div>
+                <div class="passenger-name">${request.passenger.name}</div>
+                <div class="passenger-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    ${request.passenger.rating}
+                </div>
+                <div>Phone: ${request.passenger.phone}</div>
+            `;
+            
+            currentRide = {
+                id: requestId,
+                status: 'accepted',
+                data: request
+            };
+            
+            // Add pickup and destination markers to map
+            addRideMarkers(request.pickup, request.destination);
+        }
+
+        // Add ride markers to map
+        function addRideMarkers(pickup, destination) {
+            const geocoder = new google.maps.Geocoder();
+            
+            // Add pickup marker
+            geocoder.geocode({ address: pickup }, (results, status) => {
+                if (status === 'OK' && results[0]) {
+                    new google.maps.Marker({
+                        position: results[0].geometry.location,
+                        map: map,
+                        title: 'Pickup',
+                        icon: {
+                            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="8" fill="#00d4aa"/>
+                                    <text x="12" y="16" text-anchor="middle" fill="white" font-size="12">P</text>
+                                </svg>
+                            `),
+                            scaledSize: new google.maps.Size(24, 24)
+                        }
+                    });
+                }
+            });
+            
+            // Add destination marker
+            geocoder.geocode({ address: destination }, (results, status) => {
+                if (status === 'OK' && results[0]) {
+                    new google.maps.Marker({
+                        position: results[0].geometry.location,
+                        map: map,
+                        title: 'Destination',
+                        icon: {
+                            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="8" fill="#667eea"/>
+                                    <text x="12" y="16" text-anchor="middle" fill="white" font-size="12">D</text>
+                                </svg>
+                            `),
+                            scaledSize: new google.maps.Size(24, 24)
+                        }
+                    });
+                }
+            });
+        }
+
+        // Decline ride
+        function declineRide(requestId) {
+            const requestElement = document.getElementById(`request-${requestId}`);
+            if (requestElement) {
+                requestElement.remove();
+            }
+        }
+
+        // Start ride
+        function startRide() {
+            document.querySelector('.ride-status').innerHTML = '<i class="fas fa-car"></i> Driving to destination';
+            
+            // Simulate ride completion after 8 seconds
+            setTimeout(() => {
+                completeRide();
+            }, 8000);
+        }
+
+        // Complete ride
+        function completeRide() {
+            if (!currentRide) return;
+            
+            // Update stats
+            const ridesCompleted = document.getElementById('ridesCompleted');
+            const earnings = document.getElementById('earnings');
+            
+            ridesCompleted.textContent = parseInt(ridesCompleted.textContent) + 1;
+            earnings.textContent = '$' + (parseFloat(earnings.textContent.replace('$', '')) + currentRide.data.price).toFixed(2);
+            
+            // Add to ride history
+            const historyItem = {
+                id: currentRide.id,
+                date: new Date(),
+                pickup: currentRide.data.pickup,
+                destination: currentRide.data.destination,
+                earnings: currentRide.data.price,
+                passenger: currentRide.data.passenger.name
+            };
+            
+            rideHistory.unshift(historyItem);
+            updateHistoryDisplay();
+            
+            // Hide active ride and show ride requests again
+            document.getElementById('activeRide').style.display = 'none';
+            document.getElementById('rideRequests').style.display = 'block';
+            
+            // Update status back to online
+            document.getElementById('statusIndicator').className = 'status-indicator status-online';
+            document.getElementById('statusIndicator').innerHTML = '<i class="fas fa-circle"></i><span id="statusText">Online</span>';
+            document.getElementById('statusText').textContent = 'Online';
+            
+            // Clear current ride
+            currentRide = null;
+            
+            alert(`Ride completed! You earned $${historyItem.earnings.toFixed(2)}`);
+        }
+
+        // Cancel ride
+        function cancelRide() {
+            if (confirm('Are you sure you want to cancel this ride?')) {
+                currentRide = null;
+                document.getElementById('activeRide').style.display = 'none';
+                document.getElementById('rideRequests').style.display = 'block';
+                
+                // Update status back to online
+                document.getElementById('statusIndicator').className = 'status-indicator status-online';
+                document.getElementById('statusIndicator').innerHTML = '<i class="fas fa-circle"></i><span id="statusText">Online</span>';
+                document.getElementById('statusText').textContent = 'Online';
+            }
+        }
+
+        // Switch between tabs
+        function switchTab(tab) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tabEl => {
+                tabEl.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            if (tab === 'dashboard') {
+                document.getElementById('dashboardTab').style.display = 'block';
+            } else if (tab === 'history') {
+                document.getElementById('historyTab').style.display = 'block';
+                updateHistoryDisplay();
+            }
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Update history display
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            
+            if (rideHistory.length === 0) {
+                historyList.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No ride history yet.</p>';
+                return;
+            }
+            
+            historyList.innerHTML = rideHistory.map(ride => `
+                <div class="history-item">
+                    <div class="history-header">
+                        <div class="history-date">${ride.date.toLocaleDateString()}, ${ride.date.toLocaleTimeString()}</div>
+                        <div class="history-earnings">$${ride.earnings.toFixed(2)}</div>
+                    </div>
+                    <div class="history-details">
+                        <div>From: ${ride.pickup}</div>
+                        <div>To: ${ride.destination}</div>
+                        <div>Passenger: ${ride.passenger}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/';
+            }
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', () => {
+            initMap();
+        });
+
+        // Update stats periodically
+        setInterval(() => {
+            if (isOnline) {
+                const hoursOnline = document.getElementById('hoursOnline');
+                const currentHours = parseFloat(hoursOnline.textContent);
+                hoursOnline.textContent = (currentHours + 0.01).toFixed(2);
+            }
+        }, 36000); // Update every hour (36 seconds for demo)
+    </script>
+</body>
+</html>
