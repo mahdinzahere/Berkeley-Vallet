@@ -6,15 +6,16 @@ from pathlib import Path
 from .database import engine
 from .models import Base
 # from .socket_manager import sio
-# from .routes import auth, rides, drivers, tips, webhooks
+from .routes import auth
+# from .routes import rides, drivers, tips, webhooks
 
 # Create database tables
 Base.metadata.create_all(bind=engine)  # Temporarily disabled for testing
 
 # Create FastAPI app
 app = FastAPI(
-    title="Valleyet - Your Trusted Rideshare Partner",
-    description="Valleyet Rideshare API - Safe, Reliable, Valleyet",
+    title="Valey - Your Trusted Rideshare Partner",
+    description="Valey Rideshare API - Safe, Reliable, Valey",
     version="1.0.0"
 )
 
@@ -27,8 +28,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers - temporarily disabled
-# app.include_router(auth.router)
+# Include routers
+app.include_router(auth.router, prefix="/api/auth", tags=["authentication"])
 # app.include_router(rides.router)
 # app.include_router(drivers.router)
 # app.include_router(tips.router)
@@ -41,14 +42,14 @@ app.add_middleware(
 # Mount Socket.IO app
 # app.mount("/ws", socket_app)
 
-# Serve Valleyet main website
+# Serve Valey main website
 @app.get("/")
 async def root():
-    """Serve the Valleyet main website"""
+    """Serve the Valey main website"""
     web_path = Path(__file__).parent / "web" / "index.html"
     if web_path.exists():
         return FileResponse(web_path)
-    return {"message": "Valleyet website not found"}
+    return {"message": "Valey website not found"}
 
 # Serve rider dashboard
 @app.get("/rider-dashboard")
@@ -90,7 +91,7 @@ async def get_login():
 @app.get("/api")
 async def api_info():
     return {
-        "message": "Valleyet API is running",
+        "message": "Valey API is running",
         "endpoints": {
             "main_website": "/",
             "rider_dashboard": "/rider-dashboard",
@@ -104,7 +105,7 @@ async def api_info():
 # Health check
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "service": "Valleyet"}
+    return {"status": "healthy", "service": "Valey"}
 
 # Socket.IO health check
 # @app.get("/socket-health")

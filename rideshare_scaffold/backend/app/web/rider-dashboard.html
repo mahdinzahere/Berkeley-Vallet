@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rider Dashboard - Valleyet</title>
+    <title>Rider Dashboard - Valey</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBP4bhX8cTcgF3f3Vj_NdRN-nx1_V9rQE&libraries=places"></script>
     <style>
@@ -15,19 +15,15 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8f9fa;
-            color: #333;
+            background: #0a0a0a;
+            color: #e6b3ff;
         }
 
-        /* Header */
         .header {
-            background: #000;
+            background: #1a0b2e;
             color: white;
             padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+            border-bottom: 2px solid #4a1d6b;
         }
 
         .nav {
@@ -40,92 +36,60 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
-            color: white;
+            color: #e6b3ff;
             text-decoration: none;
         }
 
-        .user-menu {
+        .nav-tabs {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            background: #1a0b2e;
+            border-radius: 10px;
+            padding: 0.5rem;
+            margin: 1rem 0;
+            border: 1px solid #4a1d6b;
         }
 
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #00d4aa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: white;
-        }
-
-        .logout-btn {
-            background: transparent;
-            color: white;
-            border: 1px solid white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: white;
-            color: black;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-top: 80px;
-            display: flex;
-            height: calc(100vh - 80px);
-        }
-
-        /* Map Section */
-        .map-section {
-            flex: 2;
-            position: relative;
-        }
-
-        #map {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Ride Panel */
-        .ride-panel {
+        .nav-tab {
             flex: 1;
-            background: white;
-            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-            overflow-y: auto;
-            max-width: 450px;
-        }
-
-        .ride-header {
-            background: #000;
-            color: white;
-            padding: 2rem;
+            padding: 1rem;
             text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            color: #ccc;
         }
 
-        .ride-header h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+        .nav-tab.active {
+            background: #4a1d6b;
+            color: #e6b3ff;
         }
 
-        .ride-header p {
-            opacity: 0.8;
-            font-size: 0.9rem;
+        .nav-tab:hover {
+            background: rgba(230, 179, 255, 0.1);
         }
 
-        /* Ride Form */
-        .ride-form {
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
+        }
+
+        .ride-form {
+            background: #1a0b2e;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border: 1px solid #4a1d6b;
         }
 
         .form-group {
@@ -136,312 +100,276 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #333;
+            color: #e6b3ff;
         }
 
         .form-group input {
             width: 100%;
             padding: 1rem;
-            border: 2px solid #ddd;
+            border: 2px solid #4a1d6b;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border-color 0.3s;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #00d4aa;
-        }
-
-        .pickup-time {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .time-option {
-            flex: 1;
-            padding: 1rem;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .time-option:hover {
-            border-color: #00d4aa;
-            background: #f8f9fa;
-        }
-
-        .time-option.selected {
-            border-color: #00d4aa;
-            background: #e8f8f3;
-        }
-
-        .time-option .time {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #00d4aa;
-        }
-
-        .time-option .label {
-            font-size: 0.9rem;
-            color: #666;
+            border-color: #e6b3ff;
         }
 
         .ride-options {
-            margin: 2rem 0;
             display: none;
+            background: #2d1b4e;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: 1px solid #4a1d6b;
         }
 
         .ride-option {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 1.5rem;
-            border: 2px solid #eee;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: #1a0b2e;
             border-radius: 8px;
-            margin-bottom: 1rem;
+            border: 1px solid #4a1d6b;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .ride-option:hover {
-            border-color: #00d4aa;
-            background: #f8f9fa;
+            border-color: #e6b3ff;
+            transform: translateY(-2px);
         }
 
         .ride-option.selected {
-            border-color: #00d4aa;
-            background: #e8f8f3;
+            border-color: #e6b3ff;
+            background: rgba(230, 179, 255, 0.1);
         }
 
-        .ride-option-icon {
-            font-size: 2rem;
-            color: #00d4aa;
-            margin-right: 1rem;
+        .ride-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .ride-option-details {
-            flex: 1;
+        .ride-icon {
+            font-size: 1.5rem;
+            color: #e6b3ff;
         }
 
-        .ride-option-name {
-            font-weight: 600;
+        .ride-details h4 {
+            color: #e6b3ff;
             margin-bottom: 0.25rem;
-            font-size: 1.1rem;
+        }
+
+        .ride-details p {
+            color: #ccc;
+            font-size: 0.9rem;
         }
 
         .ride-option-price {
-            color: #00d4aa;
+            font-size: 1.5rem;
             font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .ride-option-time {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .ride-option-eta {
-            color: #00d4aa;
-            font-size: 0.9rem;
-            font-weight: 500;
+            color: #e6b3ff;
         }
 
         .book-ride-btn {
-            width: 100%;
-            padding: 1rem;
-            background: #00d4aa;
-            color: white;
+            background: #e6b3ff;
+            color: #1a0b2e;
             border: none;
+            padding: 1rem 2rem;
             border-radius: 8px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            width: 100%;
             display: none;
         }
 
         .book-ride-btn:hover {
-            background: #00b894;
+            background: #d4a6ff;
             transform: translateY(-2px);
         }
 
-        .book-ride-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Active Ride Section */
-        .active-ride {
-            display: none;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .driver-info {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .driver-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #00d4aa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            margin: 0 auto 1rem;
-        }
-
-        .driver-name {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .driver-rating {
-            color: #ffc107;
-            margin-bottom: 1rem;
-        }
-
-        .ride-status {
-            background: #e8f8f3;
-            color: #00d4aa;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .ride-actions {
+        .pickup-time {
             display: flex;
             gap: 1rem;
+            margin: 1rem 0;
         }
 
-        .action-btn {
+        .time-option {
             flex: 1;
-            padding: 0.8rem;
-            border: none;
+            padding: 1rem;
+            text-align: center;
+            background: #2d1b4e;
             border-radius: 8px;
-            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            border: 1px solid #4a1d6b;
         }
 
-        .action-btn.primary {
-            background: #00d4aa;
-            color: white;
+        .time-option:hover {
+            border-color: #e6b3ff;
         }
 
-        .action-btn.secondary {
-            background: #f8f9fa;
-            color: #333;
-            border: 2px solid #ddd;
+        .time-option.selected {
+            border-color: #e6b3ff;
+            background: rgba(230, 179, 255, 0.1);
         }
 
-        .action-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Past Rides Section */
-        .past-rides {
-            padding: 2rem;
-            display: none;
-        }
-
-        .past-rides h3 {
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-
-        .ride-history-item {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border-left: 4px solid #00d4aa;
-        }
-
-        .ride-history-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .ride-date {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .ride-amount {
-            color: #00d4aa;
+        .time {
+            font-size: 1.2rem;
             font-weight: bold;
+            color: #e6b3ff;
         }
 
-        .ride-details {
-            color: #666;
+        .label {
+            color: #ccc;
             font-size: 0.9rem;
         }
 
-        .ride-rating {
-            color: #ffc107;
-            margin-top: 0.5rem;
+        .map-container {
+            height: 400px;
+            background: #1a0b2e;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border: 1px solid #4a1d6b;
+            overflow: hidden;
         }
 
-        /* Navigation Tabs */
-        .nav-tabs {
-            display: flex;
-            background: #f8f9fa;
-            border-bottom: 1px solid #eee;
+        #map {
+            width: 100%;
+            height: 100%;
         }
 
-        .nav-tab {
-            flex: 1;
+        .ride-history {
+            background: #1a0b2e;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #4a1d6b;
+        }
+
+        .ride-history h3 {
+            color: #e6b3ff;
+            margin-bottom: 1rem;
+        }
+
+        .history-item {
+            background: #2d1b4e;
             padding: 1rem;
-            text-align: center;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border: 1px solid #4a1d6b;
+        }
+
+        .history-item h4 {
+            color: #e6b3ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .history-item p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .add-stop-btn {
+            background: #4a1d6b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
-            border-bottom: 3px solid transparent;
+            margin: 0.5rem 0;
         }
 
-        .nav-tab.active {
-            background: white;
-            border-bottom-color: #00d4aa;
-            color: #00d4aa;
-            font-weight: 600;
+        .add-stop-btn:hover {
+            background: #6b2a8f;
         }
 
-        .nav-tab:hover {
-            background: #f0f0f0;
+        .stops-container {
+            display: none;
+            gap: 1rem;
+            flex-direction: column;
+            margin: 1rem 0;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-            }
+        .stop-input {
+            padding: 0.8rem;
+            border: 2px solid #4a1d6b;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
 
-            .ride-panel {
-                max-width: none;
-                order: -1;
-            }
+        .ride-for-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
 
-            .map-section {
-                height: 300px;
-            }
+        .ride-for-option select {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #4a1d6b;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
 
-            .pickup-time {
-                flex-direction: column;
-            }
+        .active-ride {
+            background: #1a0b2e;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border: 1px solid #4a1d6b;
+            display: none;
+        }
+
+        .active-ride h3 {
+            color: #e6b3ff;
+            margin-bottom: 1rem;
+        }
+
+        .driver-info {
+            background: #2d1b4e;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 1px solid #4a1d6b;
+        }
+
+        .driver-info h4 {
+            color: #e6b3ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .driver-info p {
+            color: #ccc;
+            margin: 0.25rem 0;
+        }
+
+        .ride-status {
+            text-align: center;
+            padding: 1rem;
+            background: #2d1b4e;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 1px solid #4a1d6b;
+        }
+
+        .ride-status h4 {
+            color: #e6b3ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .ride-status p {
+            color: #ccc;
         }
     </style>
 </head>
@@ -449,282 +377,346 @@
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <a href="/" class="logo">Valleyet</a>
-            <div class="user-menu">
-                <div class="user-avatar">JD</div>
-                <button class="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Map Section -->
-        <div class="map-section">
-            <div id="map"></div>
-        </div>
-
-        <!-- Ride Panel -->
-        <div class="ride-panel">
-            <!-- Navigation Tabs -->
+            <a href="/" class="logo">Valey</a>
             <div class="nav-tabs">
                 <div class="nav-tab active" onclick="switchTab('book')">Book Ride</div>
                 <div class="nav-tab" onclick="switchTab('history')">Past Rides</div>
             </div>
+        </nav>
+    </header>
 
-            <!-- Book Ride Tab -->
-            <div id="bookTab" class="tab-content">
-                <!-- Ride Header -->
-                <div class="ride-header">
-                    <h1>Where to?</h1>
-                    <p>Book your ride in seconds</p>
+    <div class="container">
+        <!-- Book Ride Tab -->
+        <div id="bookTab" class="tab-content active">
+            <div class="ride-form">
+                <h2 style="color: #e6b3ff; margin-bottom: 1rem;">Book Your Ride</h2>
+                
+                <div class="ride-for-option">
+                    <label>Ride for:</label>
+                    <select id="rideFor">
+                        <option value="me">For Me</option>
+                        <option value="other">Add New Contact</option>
+                    </select>
                 </div>
 
-                <!-- Ride Form -->
-                <div class="ride-form" id="rideForm">
-                    <div class="form-group">
-                        <label for="pickup">Pickup Location</label>
-                        <input type="text" id="pickup" name="pickup" placeholder="Enter pickup address" required>
-                    </div>
+                <div class="form-group">
+                    <label for="pickup">Pickup Location</label>
+                    <input type="text" id="pickup" placeholder="Enter pickup location" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="destination">Destination</label>
-                        <input type="text" id="destination" name="destination" placeholder="Where are you going?" required>
-                    </div>
+                <button class="add-stop-btn" onclick="toggleStops()">
+                    <i class="fas fa-plus"></i> Add Stop
+                </button>
 
-                    <div class="pickup-time">
-                        <div class="time-option selected" data-time="now">
-                            <div class="time">Now</div>
-                            <div class="label">Immediate</div>
-                        </div>
-                        <div class="time-option" data-time="later">
-                            <div class="time">Later</div>
-                            <div class="label">Schedule</div>
-                        </div>
-                    </div>
+                <div class="stops-container" id="stopsContainer">
+                    <input type="text" class="stop-input" placeholder="Add a stop (optional)">
+                </div>
 
-                    <div class="ride-options" id="rideOptions">
-                        <h3>Choose your ride</h3>
-                        <div class="ride-option" data-ride="economy">
-                            <div class="ride-option-icon">
+                <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <input type="text" id="destination" placeholder="Where to?" required>
+                </div>
+
+                <div class="pickup-time">
+                    <div class="time-option selected" data-time="now">
+                        <div class="time">Now</div>
+                        <div class="label">Immediate</div>
+                    </div>
+                    <div class="time-option" data-time="later">
+                        <div class="time">Later</div>
+                        <div class="label">Schedule</div>
+                    </div>
+                </div>
+
+                <div class="ride-options" id="rideOptions">
+                    <h3>Choose your ride</h3>
+                    <div class="ride-option" data-ride="economy">
+                        <div class="ride-info">
+                            <div class="ride-icon">
                                 <i class="fas fa-car"></i>
                             </div>
-                            <div class="ride-option-details">
-                                <div class="ride-option-name">Economy</div>
-                                <div class="ride-option-price" id="economyPrice">--</div>
-                                <div class="ride-option-time">3 min away</div>
-                                <div class="ride-option-eta">ETA: 15 min</div>
+                            <div class="ride-details">
+                                <h4>Economy</h4>
+                                <p>Affordable rides for everyday trips</p>
                             </div>
                         </div>
-
-                        <div class="ride-option" data-ride="comfort">
-                            <div class="ride-option-icon">
+                        <div class="ride-option-price" id="economyPrice">--</div>
+                    </div>
+                    <div class="ride-option" data-ride="comfort">
+                        <div class="ride-info">
+                            <div class="ride-icon">
                                 <i class="fas fa-car-side"></i>
                             </div>
-                            <div class="ride-option-details">
-                                <div class="ride-option-name">Comfort</div>
-                                <div class="ride-option-price" id="comfortPrice">--</div>
-                                <div class="ride-option-time">5 min away</div>
-                                <div class="ride-option-eta">ETA: 15 min</div>
+                            <div class="ride-details">
+                                <h4>Comfort</h4>
+                                <p>More space and premium vehicles</p>
                             </div>
                         </div>
-
-                        <div class="ride-option" data-ride="premium">
-                            <div class="ride-option-icon">
+                        <div class="ride-option-price" id="comfortPrice">--</div>
+                    </div>
+                    <div class="ride-option" data-ride="premium">
+                        <div class="ride-info">
+                            <div class="ride-icon">
                                 <i class="fas fa-car-rear"></i>
                             </div>
-                            <div class="ride-option-details">
-                                <div class="ride-option-name">Premium</div>
-                                <div class="ride-option-price" id="premiumPrice">--</div>
-                                <div class="ride-option-time">7 min away</div>
-                                <div class="ride-option-eta">ETA: 15 min</div>
+                            <div class="ride-details">
+                                <h4>Premium</h4>
+                                <p>Luxury vehicles with professional drivers</p>
                             </div>
                         </div>
-                    </div>
-
-                    <button class="book-ride-btn" onclick="bookRide()" id="bookRideBtn">
-                        <i class="fas fa-car"></i> Book Ride
-                    </button>
-                </div>
-
-                <!-- Active Ride Section -->
-                <div class="active-ride" id="activeRide">
-                    <div class="ride-status">
-                        <i class="fas fa-car"></i> Driver is on the way
-                    </div>
-
-                    <div class="driver-info">
-                        <div class="driver-avatar">MJ</div>
-                        <div class="driver-name">Michael Johnson</div>
-                        <div class="driver-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            4.9
-                        </div>
-                        <div>License: ABC123</div>
-                    </div>
-
-                    <div class="ride-actions">
-                        <button class="action-btn secondary" onclick="callDriver()">
-                            <i class="fas fa-phone"></i> Call
-                        </button>
-                        <button class="action-btn primary" onclick="cancelRide()">
-                            <i class="fas fa-times"></i> Cancel
-                        </button>
+                        <div class="ride-option-price" id="premiumPrice">--</div>
                     </div>
                 </div>
+
+                <button class="book-ride-btn" onclick="bookRide()" id="bookRideBtn">
+                    <i class="fas fa-car"></i> Book Ride
+                </button>
             </div>
 
-            <!-- Past Rides Tab -->
-            <div id="historyTab" class="tab-content" style="display: none;">
-                <div class="past-rides">
-                    <h3>Your Ride History</h3>
-                    <div class="ride-history-item">
-                        <div class="ride-history-header">
-                            <div class="ride-date">Today, 2:30 PM</div>
-                            <div class="ride-amount">$18.75</div>
-                        </div>
-                        <div class="ride-details">
-                            <div>From: 123 Main St, Downtown</div>
-                            <div>To: 456 Oak Ave, Uptown</div>
-                            <div>Driver: Michael Johnson</div>
-                        </div>
-                        <div class="ride-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            5.0
-                        </div>
-                    </div>
+            <!-- Map Container -->
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
 
-                    <div class="ride-history-item">
-                        <div class="ride-history-header">
-                            <div class="ride-date">Yesterday, 7:15 PM</div>
-                            <div class="ride-amount">$22.50</div>
-                        </div>
-                        <div class="ride-details">
-                            <div>From: 789 Pine St, Midtown</div>
-                            <div>To: 321 Elm St, Westside</div>
-                            <div>Driver: Sarah Wilson</div>
-                        </div>
-                        <div class="ride-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            4.8
-                        </div>
-                    </div>
+            <!-- Active Ride Section -->
+            <div class="active-ride" id="activeRide">
+                <h3>Your Active Ride</h3>
+                <div class="driver-info">
+                    <h4>Driver Information</h4>
+                    <p><strong>Name:</strong> <span id="driverName">John Doe</span></p>
+                    <p><strong>Vehicle:</strong> <span id="driverVehicle">Toyota Camry - ABC123</span></p>
+                    <p><strong>Rating:</strong> <span id="driverRating">4.8 ⭐</span></p>
+                </div>
+                <div class="ride-status">
+                    <h4>Ride Status</h4>
+                    <p id="rideStatus">Driver is on the way</p>
+                </div>
+            </div>
+        </div>
 
-                    <div class="ride-history-item">
-                        <div class="ride-history-header">
-                            <div class="ride-date">Dec 15, 11:45 AM</div>
-                            <div class="ride-amount">$15.25</div>
-                        </div>
-                        <div class="ride-details">
-                            <div>From: 654 Maple Dr, Eastside</div>
-                            <div>To: 123 Main St, Downtown</div>
-                            <div>Driver: David Chen</div>
-                        </div>
-                        <div class="ride-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            4.9
-                        </div>
-                    </div>
+        <!-- Past Rides Tab -->
+        <div id="historyTab" class="tab-content">
+            <div class="ride-history">
+                <h3>Your Ride History</h3>
+                <div id="historyList">
+                    <!-- Ride history will be populated here -->
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        let map;
+        let map, directionsService, directionsRenderer;
+        let pickupMarker, destinationMarker, stopsMarkers = [];
         let selectedRide = null;
-        let currentRide = null;
-        let pickupAutocomplete, destinationAutocomplete;
+        let rideHistory = [];
+        let locationPermissionGranted = false;
 
         // Initialize Google Maps
         function initMap() {
-            const defaultLocation = { lat: 37.7749, lng: -122.4194 }; // San Francisco
+            // Default center (San Francisco)
+            const defaultCenter = { lat: 37.7749, lng: -122.4194 };
             
             map = new google.maps.Map(document.getElementById('map'), {
-                center: defaultLocation,
-                zoom: 15,
+                zoom: 12,
+                center: defaultCenter,
                 styles: [
-                    {
-                        featureType: 'poi',
-                        elementType: 'labels',
-                        stylers: [{ visibility: 'off' }]
-                    }
+                    { elementType: 'geometry', stylers: [{ color: '#1a0b2e' }] },
+                    { elementType: 'labels.text.stroke', stylers: [{ color: '#1a0b2e' }] },
+                    { elementType: 'labels.text.fill', stylers: [{ color: '#e6b3ff' }] },
+                    { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#2d1b4e' }] },
+                    { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#4a1d6b' }] }
                 ]
             });
 
-            // Add current location marker
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const pos = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude,
-                        };
-                        
-                        new google.maps.Marker({
-                            position: pos,
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({
+                suppressMarkers: true,
+                polylineOptions: {
+                    strokeColor: '#e6b3ff',
+                    strokeWeight: 4
+                }
+            });
+            directionsRenderer.setMap(map);
+
+            // Load saved locations from session storage
+            loadSavedLocations();
+            
+            // Initialize autocomplete
+            initAutocomplete();
+        }
+
+        // Load saved locations from main page
+        function loadSavedLocations() {
+            const pickup = sessionStorage.getItem('pickupLocation');
+            const destination = sessionStorage.getItem('destinationLocation');
+            const rideFor = sessionStorage.getItem('rideFor');
+            const additionalStops = JSON.parse(sessionStorage.getItem('additionalStops') || '[]');
+
+            if (pickup) {
+                document.getElementById('pickup').value = pickup;
+                geocodeAndAddMarker(pickup, 'pickup');
+            }
+            if (destination) {
+                document.getElementById('destination').value = destination;
+                geocodeAndAddMarker(destination, 'destination');
+            }
+            if (rideFor) {
+                document.getElementById('rideFor').value = rideFor;
+            }
+            if (additionalStops.length > 0) {
+                showStops();
+                additionalStops.forEach((stop, index) => {
+                    if (stop.trim()) {
+                        const stopInput = document.querySelectorAll('.stop-input')[index];
+                        if (stopInput) {
+                            stopInput.value = stop;
+                            geocodeAndAddMarker(stop, 'stop', index);
+                        }
+                    }
+                });
+            }
+
+            // Check if we have both locations to enable pricing
+            if (pickup && destination) {
+                checkPricing();
+            }
+        }
+
+        // Initialize autocomplete
+        function initAutocomplete() {
+            const pickupInput = document.getElementById('pickup');
+            const destinationInput = document.getElementById('destination');
+
+            const pickupAutocomplete = new google.maps.places.Autocomplete(pickupInput);
+            const destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput);
+
+            pickupInput.addEventListener('input', checkPricing);
+            destinationInput.addEventListener('input', checkPricing);
+
+            // Add current location functionality
+            pickupInput.addEventListener('focus', () => {
+                if (!locationPermissionGranted && navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            locationPermissionGranted = true;
+                            const geocoder = new google.maps.Geocoder();
+                            const latlng = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+                            
+                            geocoder.geocode({ location: latlng }, (results, status) => {
+                                if (status === 'OK' && results[0]) {
+                                    pickupInput.value = results[0].formatted_address;
+                                    geocodeAndAddMarker(results[0].formatted_address, 'pickup');
+                                    checkPricing();
+                                }
+                            });
+                        },
+                        () => {
+                            console.log('Geolocation failed');
+                        }
+                    );
+                }
+            });
+        }
+
+        // Geocode address and add marker
+        function geocodeAndAddMarker(address, type, index = null) {
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ address: address }, (results, status) => {
+                if (status === 'OK' && results[0]) {
+                    const position = results[0].geometry.location;
+                    
+                    let marker;
+                    if (type === 'pickup') {
+                        if (pickupMarker) pickupMarker.setMap(null);
+                        pickupMarker = new google.maps.Marker({
+                            position: position,
                             map: map,
-                            title: 'Your Location',
+                            title: 'Pickup Location',
                             icon: {
                                 url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12" cy="12" r="8" fill="#00d4aa"/>
-                                        <circle cx="12" cy="12" r="3" fill="white"/>
+                                        <circle cx="12" cy="12" r="10" fill="#4CAF50" stroke="white" stroke-width="2"/>
+                                        <circle cx="12" cy="12" r="4" fill="white"/>
                                     </svg>
                                 `),
                                 scaledSize: new google.maps.Size(24, 24)
                             }
                         });
-                        
-                        map.setCenter(pos);
-                    },
-                    () => {
-                        console.log('Error: The Geolocation service failed.');
+                    } else if (type === 'destination') {
+                        if (destinationMarker) destinationMarker.setMap(null);
+                        destinationMarker = new google.maps.Marker({
+                            position: position,
+                            map: map,
+                            title: 'Destination',
+                            icon: {
+                                url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" fill="#F44336" stroke="white" stroke-width="2"/>
+                                        <circle cx="12" cy="12" r="4" fill="white"/>
+                                    </svg>
+                                `),
+                                scaledSize: new google.maps.Size(24, 24)
+                            }
+                        });
+                    } else if (type === 'stop') {
+                        if (stopsMarkers[index]) stopsMarkers[index].setMap(null);
+                        stopsMarkers[index] = new google.maps.Marker({
+                            position: position,
+                            map: map,
+                            title: `Stop ${index + 1}`,
+                            icon: {
+                                url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" fill="#FF9800" stroke="white" stroke-width="2"/>
+                                        <circle cx="12" cy="12" r="4" fill="white"/>
+                                    </svg>
+                                `),
+                                scaledSize: new google.maps.Size(24, 24)
+                            }
+                        });
                     }
-                );
-            }
+
+                    // Center map on first marker
+                    if (!pickupMarker && !destinationMarker) {
+                        map.setCenter(position);
+                    }
+
+                    // Draw route if we have both pickup and destination
+                    if (pickupMarker && destinationMarker) {
+                        drawRoute();
+                    }
+                }
+            });
         }
 
-        // Initialize autocomplete for pickup and destination
-        function initAutocomplete() {
-            const pickupInput = document.getElementById('pickup');
-            const destinationInput = document.getElementById('destination');
-            
-            pickupAutocomplete = new google.maps.places.Autocomplete(pickupInput);
-            destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput);
-            
-            // Add input event listeners for pricing
-            pickupInput.addEventListener('input', checkPricing);
-            destinationInput.addEventListener('input', checkPricing);
-            
-            // Load locations from sessionStorage if available
-            const savedPickup = sessionStorage.getItem('pickupLocation');
-            const savedDestination = sessionStorage.getItem('destinationLocation');
-            
-            if (savedPickup) {
-                pickupInput.value = savedPickup;
-                checkPricing();
-            }
-            
-            if (savedDestination) {
-                destinationInput.value = savedDestination;
-                checkPricing();
+        // Draw route between pickup and destination
+        function drawRoute() {
+            if (!pickupMarker || !destinationMarker) return;
+
+            const request = {
+                origin: pickupMarker.getPosition(),
+                destination: destinationMarker.getPosition(),
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+
+            directionsService.route(request, (result, status) => {
+                if (status === 'OK') {
+                    directionsRenderer.setDirections(result);
+                }
+            });
+        }
+
+        // Toggle additional stops
+        function toggleStops() {
+            const stopsContainer = document.getElementById('stopsContainer');
+            if (stopsContainer.style.display === 'none' || stopsContainer.style.display === '') {
+                stopsContainer.style.display = 'flex';
+            } else {
+                stopsContainer.style.display = 'none';
             }
         }
 
@@ -734,169 +726,185 @@
             const destination = document.getElementById('destination').value.trim();
             const rideOptions = document.getElementById('rideOptions');
             const bookRideBtn = document.getElementById('bookRideBtn');
-            
+
             if (pickup && destination) {
-                // Show ride options and calculate pricing
                 rideOptions.style.display = 'block';
                 calculatePricing(pickup, destination);
             } else {
-                // Hide ride options and pricing
                 rideOptions.style.display = 'none';
                 bookRideBtn.style.display = 'none';
             }
         }
 
-        // Calculate pricing using AI-like algorithm
+        // Calculate pricing
         function calculatePricing(pickup, destination) {
-            // Simulate AI pricing calculation based on distance and time
-            // In real app, this would use Google Maps Distance Matrix API
-            
-            // Generate realistic pricing based on route complexity
             const basePrice = 12.50;
-            const distanceMultiplier = Math.random() * 0.5 + 0.75; // 0.75 to 1.25
-            const timeMultiplier = Math.random() * 0.3 + 0.85; // 0.85 to 1.15
-            
+            const distanceMultiplier = Math.random() * 0.5 + 0.75;
+            const timeMultiplier = Math.random() * 0.3 + 0.85;
             const economyPrice = (basePrice * distanceMultiplier * timeMultiplier).toFixed(2);
-            const comfortPrice = (economyPrice * 1.5).toFixed(2);
-            const premiumPrice = (economyPrice * 2.0).toFixed(2);
             
-            // Update pricing display
             document.getElementById('economyPrice').textContent = `$${economyPrice}`;
-            document.getElementById('comfortPrice').textContent = `$${comfortPrice}`;
-            document.getElementById('premiumPrice').textContent = `$${premiumPrice}`;
-            
-            // Show book ride button
+            document.getElementById('comfortPrice').textContent = `$${(economyPrice * 1.5).toFixed(2)}`;
+            document.getElementById('premiumPrice').textContent = `$${(economyPrice * 2.0).toFixed(2)}`;
             document.getElementById('bookRideBtn').style.display = 'block';
         }
 
-        // Pickup time selection
-        document.querySelectorAll('.time-option').forEach(option => {
-            option.addEventListener('click', () => {
-                document.querySelectorAll('.time-option').forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
-                
-                if (option.dataset.time === 'later') {
-                    // Show time picker for scheduled rides
-                    alert('Scheduled rides feature coming soon!');
-                }
+        // Handle ride selection
+        document.querySelectorAll('.ride-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.ride-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedRide = this.dataset.ride;
             });
         });
 
-        // Ride option selection
-        document.querySelectorAll('.ride-option').forEach(option => {
-            option.addEventListener('click', () => {
-                document.querySelectorAll('.ride-option').forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
-                selectedRide = option.dataset.ride;
+        // Handle pickup time selection
+        document.querySelectorAll('.time-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.time-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
             });
         });
 
         // Book ride function
-        function bookRide() {
+        async function bookRide() {
+            if (!selectedRide) {
+                alert('Please select a ride type');
+                return;
+            }
+
             const pickup = document.getElementById('pickup').value;
             const destination = document.getElementById('destination').value;
-            
-            if (!pickup || !destination) {
-                alert('Please enter both pickup and destination locations.');
-                return;
-            }
-            
-            if (!selectedRide) {
-                alert('Please select a ride type.');
-                return;
-            }
-            
-            // Simulate ride booking
-            currentRide = {
-                id: Date.now(),
-                pickup: pickup,
-                destination: destination,
-                rideType: selectedRide,
-                status: 'driver_assigned'
-            };
-            
-            // Show active ride section
-            document.getElementById('rideForm').style.display = 'none';
-            document.getElementById('activeRide').style.display = 'block';
-            
-            // Simulate driver assignment
-            setTimeout(() => {
-                document.querySelector('.ride-status').innerHTML = '<i class="fas fa-car"></i> Driver is on the way';
-            }, 2000);
-            
-            // Simulate driver arrival
-            setTimeout(() => {
-                document.querySelector('.ride-status').innerHTML = '<i class="fas fa-car"></i> Driver has arrived';
-            }, 8000);
-        }
+            const rideFor = document.getElementById('rideFor').value;
+            const authToken = localStorage.getItem('authToken');
 
-        // Call driver function
-        function callDriver() {
-            alert('Calling driver... (This would integrate with phone system)');
-        }
-
-        // Cancel ride function
-        function cancelRide() {
-            if (confirm('Are you sure you want to cancel this ride?')) {
-                currentRide = null;
-                document.getElementById('rideForm').style.display = 'block';
-                document.getElementById('activeRide').style.display = 'none';
-                
-                // Reset form
-                document.getElementById('pickup').value = '';
-                document.getElementById('destination').value = '';
-                document.querySelectorAll('.ride-option').forEach(opt => opt.classList.remove('selected'));
-                selectedRide = null;
-                
-                // Hide ride options
-                document.getElementById('rideOptions').style.display = 'none';
-                document.getElementById('bookRideBtn').style.display = 'none';
-            }
-        }
-
-        // Switch between tabs
-        function switchTab(tab) {
-            // Hide all tab content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.style.display = 'none';
-            });
-            
-            // Remove active class from all tabs
-            document.querySelectorAll('.nav-tab').forEach(tabEl => {
-                tabEl.classList.remove('active');
-            });
-            
-            // Show selected tab content
-            if (tab === 'book') {
-                document.getElementById('bookTab').style.display = 'block';
-            } else if (tab === 'history') {
-                document.getElementById('historyTab').style.display = 'block';
-            }
-            
-            // Add active class to clicked tab
-            event.target.classList.add('active');
-        }
-
-        // Logout function
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
+            if (!authToken) {
+                alert('Please log in to book a ride');
                 window.location.href = '/';
+                return;
+            }
+
+            try {
+                // Get coordinates for pickup and destination
+                const pickupCoords = await geocodeAddress(pickup);
+                const destinationCoords = await geocodeAddress(destination);
+
+                if (!pickupCoords || !destinationCoords) {
+                    alert('Could not find coordinates for the addresses');
+                    return;
+                }
+
+                // Create ride request
+                const rideRequest = {
+                    pickup_address: pickup,
+                    pickup_latitude: pickupCoords.lat,
+                    pickup_longitude: pickupCoords.lng,
+                    dropoff_address: destination,
+                    dropoff_latitude: destinationCoords.lat,
+                    dropoff_longitude: destinationCoords.lng,
+                    ride_type: selectedRide
+                };
+
+                // Send ride request to backend
+                const response = await fetch('/api/rides/request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(rideRequest)
+                });
+
+                if (response.ok) {
+                    const ride = await response.json();
+                    
+                    // Add to ride history
+                    rideHistory.push(ride);
+                    updateHistoryDisplay();
+
+                    // Show active ride
+                    document.getElementById('activeRide').style.display = 'block';
+                    document.getElementById('rideStatus').textContent = 'Ride requested successfully!';
+
+                    // Update driver info when available
+                    if (ride.driver) {
+                        document.getElementById('driverName').textContent = ride.driver.name;
+                        document.getElementById('driverVehicle').textContent = `${ride.driver.vehicle_make} ${ride.driver.vehicle_model} - ${ride.driver.license_plate}`;
+                        document.getElementById('driverRating').textContent = `${ride.driver.rating} ⭐`;
+                    }
+                } else {
+                    const error = await response.json();
+                    alert('Failed to book ride: ' + error.detail);
+                }
+            } catch (error) {
+                console.error('Error booking ride:', error);
+                alert('Failed to book ride. Please try again.');
+            }
+        }
+
+        // Helper function to geocode address
+        function geocodeAddress(address) {
+            return new Promise((resolve) => {
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ address: address }, (results, status) => {
+                    if (status === 'OK' && results[0]) {
+                        const location = results[0].geometry.location;
+                        resolve({
+                            lat: location.lat(),
+                            lng: location.lng()
+                        });
+                    } else {
+                        resolve(null);
+                    }
+                });
+            });
+        }
+
+        // Switch tabs
+        function switchTab(tab) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        // Update history display
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+
+            rideHistory.forEach(ride => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `
+                    <h4>${ride.pickup} → ${ride.destination}</h4>
+                    <p><strong>Ride Type:</strong> ${ride.rideType}</p>
+                    <p><strong>For:</strong> ${ride.rideFor}</p>
+                    <p><strong>Date:</strong> ${ride.date} at ${ride.time}</p>
+                    <p><strong>Status:</strong> ${ride.status}</p>
+                `;
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        // Check authentication on page load
+        function checkAuth() {
+            const authToken = localStorage.getItem('authToken');
+            const userRole = localStorage.getItem('userRole');
+            
+            if (!authToken || userRole !== 'rider') {
+                alert('Please log in as a rider to access this page');
+                window.location.href = '/';
+                return;
             }
         }
 
         // Initialize when page loads
         window.addEventListener('load', () => {
+            checkAuth();
             initMap();
-            initAutocomplete();
         });
-
-        // Simulate real-time updates
-        setInterval(() => {
-            if (currentRide && currentRide.status === 'driver_assigned') {
-                // Update driver location on map (this would be real data from backend)
-                console.log('Updating driver location...');
-            }
-        }, 5000);
     </script>
 </body>
 </html>

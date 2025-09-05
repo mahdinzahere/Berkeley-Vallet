@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valleyet - Your Trusted Rideshare Partner</title>
+    <title>Valey - Your Trusted Rideshare Partner</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBP4bhX8cTcgF3f3Vj_NdRN-nx1_V9rQE&libraries=places"></script>
     <style>
@@ -17,11 +17,12 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
+            background: #0a0a0a;
         }
 
         /* Header */
         .header {
-            background: rgba(0, 0, 0, 0.9);
+            background: #1a0b2e;
             color: white;
             padding: 1rem 0;
             position: fixed;
@@ -29,6 +30,7 @@
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(10px);
+            border-bottom: 2px solid #4a1d6b;
         }
 
         .nav {
@@ -43,7 +45,7 @@
         .logo {
             font-size: 2rem;
             font-weight: bold;
-            color: white;
+            color: #e6b3ff;
             text-decoration: none;
         }
 
@@ -66,27 +68,27 @@
         .btn-login {
             background: transparent;
             color: white;
-            border: 2px solid white;
+            border: 2px solid #e6b3ff;
         }
 
         .btn-login:hover {
-            background: white;
-            color: black;
+            background: #e6b3ff;
+            color: #1a0b2e;
         }
 
         .btn-signup {
-            background: #00d4aa;
+            background: #4a1d6b;
             color: white;
         }
 
         .btn-signup:hover {
-            background: #00b894;
+            background: #6b2a8f;
             transform: translateY(-2px);
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
             color: white;
             padding: 8rem 2rem 4rem;
             text-align: center;
@@ -101,6 +103,7 @@
             font-size: 3.5rem;
             margin-bottom: 1rem;
             font-weight: 700;
+            color: #e6b3ff;
         }
 
         .hero p {
@@ -112,13 +115,15 @@
 
         /* Search Bar */
         .search-container {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(230, 179, 255, 0.3);
         }
 
         .search-bar {
@@ -129,20 +134,73 @@
 
         .search-input {
             padding: 1rem;
-            border: 2px solid #eee;
+            border: 2px solid rgba(230, 179, 255, 0.3);
             border-radius: 8px;
             font-size: 1rem;
             transition: border-color 0.3s;
+            background: rgba(255, 255, 255, 0.9);
+            color: #1a0b2e;
         }
 
         .search-input:focus {
             outline: none;
-            border-color: #00d4aa;
+            border-color: #e6b3ff;
+        }
+
+        .ride-options {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .ride-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+        }
+
+        .ride-option select {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid rgba(230, 179, 255, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+            color: #1a0b2e;
+        }
+
+        .add-stop-btn {
+            background: #4a1d6b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-stop-btn:hover {
+            background: #6b2a8f;
+        }
+
+        .stops-container {
+            display: none;
+            gap: 1rem;
+            flex-direction: column;
+        }
+
+        .stop-input {
+            padding: 0.8rem;
+            border: 2px solid rgba(230, 179, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #1a0b2e;
         }
 
         .search-button {
-            background: #00d4aa;
-            color: white;
+            background: #e6b3ff;
+            color: #1a0b2e;
             border: none;
             padding: 1rem 2rem;
             border-radius: 8px;
@@ -153,12 +211,12 @@
         }
 
         .search-button:hover {
-            background: #00b894;
+            background: #d4a6ff;
             transform: translateY(-2px);
         }
 
         .search-button:disabled {
-            background: #ccc;
+            background: #666;
             cursor: not-allowed;
             transform: none;
         }
@@ -183,39 +241,39 @@
         }
 
         .btn-primary {
-            background: #00d4aa;
-            color: white;
+            background: #e6b3ff;
+            color: #1a0b2e;
         }
 
         .btn-primary:hover {
-            background: #00b894;
+            background: #d4a6ff;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,212,170,0.4);
+            box-shadow: 0 5px 15px rgba(230, 179, 255, 0.4);
         }
 
         .btn-secondary {
             background: transparent;
             color: white;
-            border: 2px solid white;
+            border: 2px solid #e6b3ff;
         }
 
         .btn-secondary:hover {
-            background: white;
-            color: #667eea;
+            background: #e6b3ff;
+            color: #1a0b2e;
             transform: translateY(-2px);
         }
 
         /* Features Section */
         .features {
             padding: 5rem 2rem;
-            background: #f8f9fa;
+            background: #0f0f0f;
         }
 
         .features h2 {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            color: #333;
+            color: #e6b3ff;
         }
 
         .features-grid {
@@ -227,12 +285,13 @@
         }
 
         .feature-card {
-            background: white;
+            background: #1a0b2e;
             padding: 2rem;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             transition: transform 0.3s;
+            border: 1px solid #4a1d6b;
         }
 
         .feature-card:hover {
@@ -241,32 +300,32 @@
 
         .feature-icon {
             font-size: 3rem;
-            color: #667eea;
+            color: #e6b3ff;
             margin-bottom: 1rem;
         }
 
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #333;
+            color: #e6b3ff;
         }
 
         .feature-card p {
-            color: #666;
+            color: #ccc;
             line-height: 1.6;
         }
 
         /* App Sections */
         .app-sections {
             padding: 5rem 2rem;
-            background: white;
+            background: #1a0b2e;
         }
 
         .app-sections h2 {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            color: #333;
+            color: #e6b3ff;
         }
 
         .app-grid {
@@ -278,12 +337,13 @@
         }
 
         .app-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #2d1b4e 0%, #4a1d6b 100%);
             color: white;
             padding: 2rem;
             border-radius: 15px;
             text-align: center;
             transition: transform 0.3s;
+            border: 1px solid #6b2a8f;
         }
 
         .app-card:hover {
@@ -293,6 +353,7 @@
         .app-card h3 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
+            color: #e6b3ff;
         }
 
         .app-card p {
@@ -302,10 +363,11 @@
 
         /* Footer */
         .footer {
-            background: #333;
+            background: #0a0a0a;
             color: white;
             text-align: center;
             padding: 2rem;
+            border-top: 1px solid #4a1d6b;
         }
 
         /* Responsive */
@@ -336,6 +398,11 @@
                 width: 100%;
                 max-width: 300px;
             }
+
+            .ride-options {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
 
         /* Modal Styles */
@@ -347,17 +414,19 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.8);
         }
 
         .modal-content {
-            background-color: white;
+            background-color: #1a0b2e;
             margin: 5% auto;
             padding: 2rem;
             border-radius: 15px;
             width: 90%;
             max-width: 500px;
             position: relative;
+            border: 1px solid #4a1d6b;
+            color: white;
         }
 
         .close {
@@ -366,11 +435,11 @@
             top: 1rem;
             font-size: 2rem;
             cursor: pointer;
-            color: #666;
+            color: #e6b3ff;
         }
 
         .close:hover {
-            color: #333;
+            color: #d4a6ff;
         }
 
         .form-group {
@@ -381,25 +450,28 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
+            color: #e6b3ff;
         }
 
         .form-group input {
             width: 100%;
             padding: 0.8rem;
-            border: 2px solid #ddd;
+            border: 2px solid #4a1d6b;
             border-radius: 8px;
             font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #e6b3ff;
         }
 
         .form-tabs {
             display: flex;
             margin-bottom: 2rem;
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid #4a1d6b;
         }
 
         .form-tab {
@@ -409,16 +481,17 @@
             cursor: pointer;
             border-bottom: 3px solid transparent;
             transition: all 0.3s;
+            color: #ccc;
         }
 
         .form-tab.active {
-            border-bottom-color: #667eea;
-            color: #667eea;
+            border-bottom-color: #e6b3ff;
+            color: #e6b3ff;
             font-weight: 600;
         }
 
         .form-tab:hover {
-            background: #f8f9fa;
+            background: rgba(230, 179, 255, 0.1);
         }
 
         .form-content {
@@ -428,13 +501,165 @@
         .form-content.active {
             display: block;
         }
+
+        /* Google Sign-In Button */
+        .google-signin-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .google-signin-btn:hover {
+            background: #357ae8;
+            transform: translateY(-2px);
+        }
+
+        .google-signin-btn i {
+            font-size: 1.2rem;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 1rem 0;
+            color: #ccc;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #4a1d6b;
+        }
+
+        .divider span {
+            background: #1a0b2e;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Book for Someone Else Page */
+        .book-for-other-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 3000;
+            overflow-y: auto;
+        }
+
+        .book-for-other-content {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #1a0b2e;
+            border-radius: 15px;
+            border: 1px solid #4a1d6b;
+        }
+
+        .book-for-other-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .book-for-other-header h1 {
+            color: #e6b3ff;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-for-other-header p {
+            color: #ccc;
+            font-size: 1.2rem;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-item {
+            background: #2d1b4e;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #4a1d6b;
+            text-align: center;
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: #e6b3ff;
+            margin-bottom: 1rem;
+        }
+
+        .feature-item h3 {
+            color: #e6b3ff;
+            margin-bottom: 1rem;
+        }
+
+        .feature-item p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .start-now-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: #e6b3ff;
+            color: #1a0b2e;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .start-now-btn:hover {
+            background: #d4a6ff;
+            transform: translateY(-2px);
+        }
+
+        .close-book-for-other {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #e6b3ff;
+        }
+
+        .close-book-for-other:hover {
+            color: #d4a6ff;
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <a href="#" class="logo">Valleyet</a>
+            <a href="#" class="logo">Valey</a>
             <div class="nav-buttons">
                 <a href="#" class="btn-nav btn-login" onclick="openLoginModal()">Login</a>
                 <a href="#" class="btn-nav btn-signup" onclick="openSignupModal()">Sign Up</a>
@@ -444,13 +669,29 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Welcome to Valleyet</h1>
+        <h1>Welcome to Valey</h1>
         <p>Your trusted rideshare partner in the valley. Safe, reliable, and affordable transportation at your fingertips.</p>
         
         <!-- Search Bar -->
         <div class="search-container">
             <div class="search-bar">
+                <div class="ride-options">
+                    <div class="ride-option">
+                        <label>Ride for:</label>
+                        <select id="rideFor">
+                            <option value="me">For Me</option>
+                            <option value="other">Add New Contact</option>
+                        </select>
+                    </div>
+                    <button class="add-stop-btn" onclick="toggleStops()">
+                        <i class="fas fa-plus"></i> Add Stop
+                    </button>
+                </div>
+                
                 <input type="text" id="pickupLocation" class="search-input" placeholder="Enter pickup location" required>
+                <div class="stops-container" id="stopsContainer">
+                    <input type="text" class="stop-input" placeholder="Add a stop (optional)">
+                </div>
                 <input type="text" id="destinationLocation" class="search-input" placeholder="Where to?" required>
                 <button class="search-button" onclick="searchRide()" id="searchButton" disabled>
                     <i class="fas fa-search"></i> See Prices
@@ -466,7 +707,7 @@
 
     <!-- Features Section -->
     <section id="features" class="features">
-        <h2>Why Choose Valleyet?</h2>
+        <h2>Why Choose Valey?</h2>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">
@@ -501,7 +742,7 @@
 
     <!-- App Sections -->
     <section id="apps" class="app-sections">
-        <h2>Get the Valleyet Experience</h2>
+        <h2>Get the Valey Experience</h2>
         <div class="app-grid">
             <div class="app-card">
                 <h3>For Riders</h3>
@@ -518,14 +759,14 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 Valleyet. All rights reserved. | Safe, Reliable, Valleyet.</p>
+        <p>&copy; 2024 Valey. All rights reserved. | Safe, Reliable, Valey.</p>
     </footer>
 
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeLoginModal()">&times;</span>
-            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Welcome Back to Valleyet</h2>
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #e6b3ff;">Welcome Back to Valey</h2>
             
             <form id="loginForm">
                 <div class="form-group">
@@ -544,7 +785,7 @@
             </form>
             
             <p style="text-align: center; margin-top: 1rem;">
-                Don't have an account? <a href="#" onclick="switchToSignup()" style="color: #667eea;">Sign up here</a>
+                Don't have an account? <a href="#" onclick="switchToSignup()" style="color: #e6b3ff;">Sign up here</a>
             </p>
         </div>
     </div>
@@ -553,11 +794,22 @@
     <div id="signupModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeSignupModal()">&times;</span>
-            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Join Valleyet</h2>
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #e6b3ff;">Join Valey</h2>
             
             <div class="form-tabs">
                 <div class="form-tab active" onclick="switchTab('rider')">Rider</div>
                 <div class="form-tab" onclick="switchTab('driver')">Driver</div>
+            </div>
+            
+            <!-- Google Sign-In Button -->
+            <div class="google-signin-container">
+                <button class="google-signin-btn" onclick="signInWithGoogle()">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+            </div>
+            
+            <div class="divider">
+                <span>or</span>
             </div>
             
             <!-- Rider Signup Form -->
@@ -624,14 +876,51 @@
             </div>
             
             <p style="text-align: center; margin-top: 1rem;">
-                Already have an account? <a href="#" onclick="switchToLogin()" style="color: #667eea;">Sign in here</a>
+                Already have an account? <a href="#" onclick="switchToLogin()" style="color: #e6b3ff;">Sign in here</a>
             </p>
+        </div>
+    </div>
+
+    <!-- Book for Someone Else Page -->
+    <div id="bookForOtherPage" class="book-for-other-page">
+        <div class="book-for-other-content">
+            <span class="close-book-for-other" onclick="closeBookForOther()">&times;</span>
+            
+            <div class="book-for-other-header">
+                <h1>Book for Someone Else</h1>
+                <p>Make pickup easy and follow their ride from start to finish</p>
+            </div>
+            
+            <div class="features-list">
+                <div class="feature-item">
+                    <i class="fas fa-car"></i>
+                    <h3>Make pickup easy</h3>
+                    <p>Guests can easily find the right vehicle or contact their driver without you</p>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Follow their ride</h3>
+                    <p>You can follow your guests ride from start to finish</p>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>Pay in the app</h3>
+                    <p>Pay for your guests trip directly through the app</p>
+                </div>
+            </div>
+            
+            <button class="start-now-btn" onclick="startBookingForOther()">
+                Start Now
+            </button>
         </div>
     </div>
 
     <script>
         let currentTab = 'rider';
         let pickupAutocomplete, destinationAutocomplete;
+        let locationPermissionGranted = false;
         
         // Initialize Google Maps Autocomplete
         function initAutocomplete() {
@@ -647,9 +936,10 @@
             
             // Add current location button functionality
             pickupInput.addEventListener('focus', () => {
-                if (navigator.geolocation) {
+                if (!locationPermissionGranted && navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                         (position) => {
+                            locationPermissionGranted = true;
                             const geocoder = new google.maps.Geocoder();
                             const latlng = {
                                 lat: position.coords.latitude,
@@ -671,6 +961,16 @@
             });
         }
         
+        // Toggle additional stops
+        function toggleStops() {
+            const stopsContainer = document.getElementById('stopsContainer');
+            if (stopsContainer.style.display === 'none' || stopsContainer.style.display === '') {
+                stopsContainer.style.display = 'flex';
+            } else {
+                stopsContainer.style.display = 'none';
+            }
+        }
+        
         // Check if search button should be enabled
         function checkSearchButton() {
             const pickup = document.getElementById('pickupLocation').value.trim();
@@ -688,15 +988,28 @@
         function searchRide() {
             const pickup = document.getElementById('pickupLocation').value;
             const destination = document.getElementById('destinationLocation').value;
+            const rideFor = document.getElementById('rideFor').value;
             
             if (!pickup || !destination) {
                 alert('Please enter both pickup and destination locations.');
                 return;
             }
             
+            // Check if user selected "Add New Contact"
+            if (rideFor === 'other') {
+                openBookForOther();
+                return;
+            }
+            
             // Store locations in sessionStorage for the dashboard
             sessionStorage.setItem('pickupLocation', pickup);
             sessionStorage.setItem('destinationLocation', destination);
+            sessionStorage.setItem('rideFor', rideFor);
+            
+            // Get additional stops if any
+            const stopInputs = document.querySelectorAll('.stop-input');
+            const stops = Array.from(stopInputs).map(input => input.value).filter(stop => stop.trim());
+            sessionStorage.setItem('additionalStops', JSON.stringify(stops));
             
             // Redirect to rider dashboard
             window.location.href = '/rider-dashboard';
@@ -754,65 +1067,226 @@
         }
 
         // Handle login form submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             
-            console.log('Login attempt:', { email, password });
-            
-            // Here you would send login data to backend and get user role
-            // For demo purposes, we'll simulate a successful login
-            alert('Login successful! Redirecting to dashboard...');
-            
-            // Simulate getting user role from backend
-            // In real app, this would come from the login response
-            const userRole = email.includes('driver') ? 'driver' : 'rider';
-            
-            // Redirect based on role
-            if (userRole === 'driver') {
-                window.location.href = '/driver-dashboard';
-            } else {
-                window.location.href = '/rider-dashboard';
+            try {
+                // Send login data to backend
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Store authentication token
+                    localStorage.setItem('authToken', data.access_token);
+                    localStorage.setItem('userRole', data.user.role);
+                    localStorage.setItem('userId', data.user.id);
+                    
+                    // Redirect based on role
+                    if (data.user.role === 'driver') {
+                        window.location.href = '/driver-dashboard';
+                    } else {
+                        window.location.href = '/rider-dashboard';
+                    }
+                } else {
+                    const error = await response.json();
+                    alert('Login failed: ' + error.detail);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed. Please try again.');
             }
         });
 
         // Handle rider signup form submission
-        document.getElementById('riderSignupForm').addEventListener('submit', function(e) {
+        document.getElementById('riderSignupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
+            data.role = 'rider';
             
-            console.log('Rider signup:', data);
-            
-            // Here you would send signup data to backend
-            alert('Rider account created successfully! Redirecting to rider dashboard...');
-            
-            // Redirect to rider dashboard
-            setTimeout(() => {
-                window.location.href = '/rider-dashboard';
-            }, 1500);
+            try {
+                // Send signup data to backend
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    alert('Rider account created successfully! Redirecting to rider dashboard...');
+                    
+                    // Store authentication token
+                    localStorage.setItem('authToken', result.access_token);
+                    localStorage.setItem('userRole', 'rider');
+                    localStorage.setItem('userId', result.user.id);
+                    
+                    // Redirect to rider dashboard
+                    setTimeout(() => {
+                        window.location.href = '/rider-dashboard';
+                    }, 1500);
+                } else {
+                    const error = await response.json();
+                    alert('Signup failed: ' + error.detail);
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                alert('Signup failed. Please try again.');
+            }
         });
 
         // Handle driver signup form submission
-        document.getElementById('driverSignupForm').addEventListener('submit', function(e) {
+        document.getElementById('driverSignupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
+            data.role = 'driver';
             
-            console.log('Driver signup:', data);
-            
-            // Here you would send signup data to backend
-            alert('Driver account created successfully! Redirecting to driver dashboard...');
-            
-            // Redirect to driver dashboard
-            setTimeout(() => {
-                window.location.href = '/driver-dashboard';
-            }, 1500);
+            try {
+                // Send signup data to backend
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    alert('Driver account created successfully! Redirecting to driver dashboard...');
+                    
+                    // Store authentication token
+                    localStorage.setItem('authToken', result.access_token);
+                    localStorage.setItem('userRole', 'driver');
+                    localStorage.setItem('userId', result.user.id);
+                    
+                    // Redirect to driver dashboard
+                    setTimeout(() => {
+                        window.location.href = '/driver-dashboard';
+                    }, 1500);
+                } else {
+                    const error = await response.json();
+                    alert('Signup failed: ' + error.detail);
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                alert('Signup failed. Please try again.');
+            }
         });
+
+        // Google Sign-In function
+        async function signInWithGoogle() {
+            try {
+                // This would integrate with Google OAuth
+                // For now, we'll simulate the process
+                console.log('Google Sign-In initiated');
+                
+                // In a real implementation, this would:
+                // 1. Open Google OAuth popup
+                // 2. Get user information from Google
+                // 3. Send to backend for authentication
+                // 4. Redirect based on user role
+                
+                // Simulate Google OAuth response
+                const googleUser = {
+                    email: 'user@gmail.com',
+                    name: 'Google User',
+                    picture: 'https://via.placeholder.com/150'
+                };
+                
+                // Send Google user data to backend
+                const response = await fetch('/api/auth/google', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(googleUser)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    
+                    // Store authentication token
+                    localStorage.setItem('authToken', result.access_token);
+                    localStorage.setItem('userRole', result.user.role);
+                    localStorage.setItem('userId', result.user.id);
+                    
+                    // Redirect based on role
+                    if (result.user.role === 'driver') {
+                        window.location.href = '/driver-dashboard';
+                    } else {
+                        window.location.href = '/rider-dashboard';
+                    }
+                } else {
+                    const error = await response.json();
+                    alert('Google Sign-In failed: ' + error.detail);
+                }
+            } catch (error) {
+                console.error('Google Sign-In error:', error);
+                alert('Google Sign-In failed. Please try again.');
+            }
+        }
+
+        // Book for someone else functions
+        function openBookForOther() {
+            document.getElementById('bookForOtherPage').style.display = 'block';
+        }
+
+        function closeBookForOther() {
+            document.getElementById('bookForOtherPage').style.display = 'none';
+        }
+
+        function startBookingForOther() {
+            // Close the book for other page
+            closeBookForOther();
+            
+            // Show contact information form
+            const contactInfo = prompt('Enter contact information (Name, Phone, Email) separated by commas:\nExample: John Doe, +1234567890, john@example.com');
+            
+            if (contactInfo) {
+                const [name, phone, email] = contactInfo.split(',').map(item => item.trim());
+                
+                if (name && phone && email) {
+                    // Store contact information
+                    sessionStorage.setItem('bookingForOther', JSON.stringify({
+                        name: name,
+                        phone: phone,
+                        email: email
+                    }));
+                    
+                    // Store ride information
+                    const pickup = document.getElementById('pickupLocation').value;
+                    const destination = document.getElementById('destinationLocation').value;
+                    const stopInputs = document.querySelectorAll('.stop-input');
+                    const stops = Array.from(stopInputs).map(input => input.value).filter(stop => stop.trim());
+                    
+                    sessionStorage.setItem('pickupLocation', pickup);
+                    sessionStorage.setItem('destinationLocation', destination);
+                    sessionStorage.setItem('additionalStops', JSON.stringify(stops));
+                    sessionStorage.setItem('rideFor', 'other');
+                    
+                    // Redirect to rider dashboard
+                    window.location.href = '/rider-dashboard';
+                } else {
+                    alert('Please provide all required information: Name, Phone, and Email');
+                }
+            }
+        }
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -10,7 +10,8 @@ class UserBase(BaseModel):
     role: UserRole
 
 class UserCreate(UserBase):
-    pass
+    password: str
+    name: str
 
 class UserResponse(UserBase):
     id: int
@@ -19,6 +20,18 @@ class UserResponse(UserBase):
     
     class Config:
         from_attributes = True
+
+# Google OAuth schemas
+class GoogleUser(BaseModel):
+    email: EmailStr
+    name: str
+    picture: Optional[str] = None
+
+# Token schemas
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserResponse
 
 # Auth schemas
 class MagicLinkRequest(BaseModel):
